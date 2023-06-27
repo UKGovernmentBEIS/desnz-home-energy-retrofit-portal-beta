@@ -21,8 +21,9 @@ using HerPortal.Services;
 using HerPublicWebsite.BusinessLogic.Services.S3ReferralFileKeyGenerator;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.HttpLogging;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using GlobalConfiguration = HerPortal.BusinessLogic.GlobalConfiguration;
 
 namespace HerPortal
@@ -71,17 +72,27 @@ namespace HerPortal
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
             })
-            .AddCookie()
+            .AddCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
+                options.SlidingExpiration = true;
+                options.Cookie.SameSite = SameSiteMode.Strict; // Check this doesn't break anything.
+            })
             .AddOpenIdConnect(options =>
             {
-                options.ResponseType = "code";
+                // Check this doesn't break anything.
+                options.NonceCookie.SameSite = SameSiteMode.Strict;
+                options.CorrelationCookie.SameSite = SameSiteMode.Strict;
+                
+                options.ResponseType = OpenIdConnectResponseType.Code;
                 options.MetadataAddress = configuration["Authentication:Cognito:MetadataAddress"];
                 options.ClientId = configuration["Authentication:Cognito:ClientId"];
                 options.ClientSecret = configuration["Authentication:Cognito:ClientSecret"];
                 options.Scope.Add("email");
                 options.Scope.Add("openid");
                 options.Scope.Add("profile");
-                options.SaveTokens = true;
+                options.SaveTokens = true; // Save tokens issued to encrypted cookies
+                options.UseTokenLifetime = false; // Don't override the cookie lifetime set above
             });
 
             services.AddHsts(options =>
