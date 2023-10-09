@@ -1,7 +1,7 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.S3.Transfer;
-using HerPublicWebsite.BusinessLogic.Services.S3ReferralFileKeyGenerator;
+using HerPortal.BusinessLogic.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 

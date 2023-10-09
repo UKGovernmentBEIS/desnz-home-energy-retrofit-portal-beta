@@ -11,14 +11,14 @@ namespace HerPortal.ManagementShell
             New,
             Active
         }
-        
+
         public static void Main(string[] args)
         {
             var contextOptions = new DbContextOptionsBuilder<HerDbContext>()
                 .UseNpgsql(
                     @"UserId=postgres;Password=postgres;Server=localhost;Port=5432;Database=herportaldev;Integrated Security=true;Include Error Detail=true;Pooling=true")
                 .Options;
-            
+
             using var context = new HerDbContext(contextOptions);
             var outputProvider = new OutputProvider();
             var dbOperation = new DatabaseOperation(context, outputProvider);
@@ -59,8 +59,8 @@ namespace HerPortal.ManagementShell
                     break;
                 case "add-las":
                     adminAction.DisplayUserStatus(userStatus);
-                   
-                    
+
+
                         userConfirmation = adminAction.ConfirmCustodianCodes(custodianCodes, userEmailAddress);
 
                         if (userConfirmation)

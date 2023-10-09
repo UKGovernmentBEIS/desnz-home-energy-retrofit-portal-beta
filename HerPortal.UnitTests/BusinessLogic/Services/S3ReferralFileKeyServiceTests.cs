@@ -1,6 +1,6 @@
 ﻿using System;
 using FluentAssertions;
-using HerPublicWebsite.BusinessLogic.Services.S3ReferralFileKeyGenerator;
+using HerPortal.BusinessLogic.Services;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using Moq;

@@ -13,7 +13,7 @@ public class AdminAction
         this.dbOperation = dbOperation;
         this.outputProvider = outputProvider;
     }
-    
+
     public User? GetUser(string emailAddress)
     {
         var portalUsers = dbOperation.GetUsersWithLocalAuthorities();
@@ -65,7 +65,7 @@ public class AdminAction
     {
         return userOrNull == null ? Program.UserStatus.New : Program.UserStatus.Active;
     }
-    
+
     public void TryCreateUser(string userEmailAddress, string[]? custodianCodes)
     {
         dbOperation.CreateUserOrLogError(userEmailAddress, custodianCodes);
@@ -84,7 +84,7 @@ public class AdminAction
     {
         dbOperation.RemoveLasFromUser(custodianCodes, user);
     }
-    
+
     public void Output(string outputString)
     {
         outputProvider.Output(outputString);

@@ -22,7 +22,6 @@ using HerPortal.Data;
 using HerPortal.ErrorHandling;
 using HerPortal.Middleware;
 using HerPortal.Services;
-using HerPublicWebsite.BusinessLogic.Services.S3ReferralFileKeyGenerator;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Http;
