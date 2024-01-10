@@ -7,9 +7,9 @@ using HerPortal.BusinessLogic.Services.CsvFileService;
 
 namespace HerPortal.Models;
 
-public class AdminViewModel
+public class UsersViewModel
 {
-    public AdminViewModel()
+    public UsersViewModel()
     {
         
     }

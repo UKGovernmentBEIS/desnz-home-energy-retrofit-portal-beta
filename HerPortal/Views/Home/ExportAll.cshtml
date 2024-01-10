@@ -1,0 +1,25 @@
+﻿@model HerPortal.Models.ExportAllViewModel
+@using GovUkDesignSystem
+@using GovUkDesignSystem.GovUkDesignSystemComponents
+@{
+    ViewBag.Title = "Admin - Home Energy Retrofit Portal BETA";   
+}
+
+
+@section BeforeMain {
+    <nav class="app-primary-navigation" aria-label="primary">
+        <ul class="app-primary-navigation__list">
+            <li class="app-primary-navigation__item">
+                <a asp-action="Index" class="app-primary-navigation__link">Local Authorities</a>
+            </li>
+            <li class="app-primary-navigation__item">
+                <a asp-action="Users" class="app-primary-navigation__link">Users</a>
+            </li>
+            <li class="app-primary-navigation__item app-primary-navigation__item--current">
+                <a asp-action="ExportAll" class="app-primary-navigation__link" aria-current="page">Export All</a>
+            </li>
+        </ul>
+    </nav>
+}
+
+<p>Export All</p>

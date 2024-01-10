@@ -40,9 +40,9 @@ public class HomeController : Controller
         switch (permission)
         {
             case "admin":
-                var adminViewModel = new AdminViewModel();
+                var localAuthoritiesViewModel = new LocalAuthoritiesViewModel();
                 
-                return View("Admin", adminViewModel);
+                return View("LocalAuthorities", localAuthoritiesViewModel);
             default:
 
                 var csvFilePage = await csvFileService.GetPaginatedFileDataForUserAsync(userEmailAddress, custodianCodes, page, PageSize);
@@ -65,5 +65,19 @@ public class HomeController : Controller
     public IActionResult SupportingDocuments()
     {
         return View("SupportingDocuments");
+    }
+
+    [HttpGet("/users")]
+    public IActionResult Users()
+    {
+        var usersViewModel = new UsersViewModel();
+        return View("Users", usersViewModel);
+    }
+
+    [HttpGet("/export-all")]
+    public IActionResult ExportAll()
+    {
+        var exportAllViewModel = new ExportAllViewModel();
+        return View("ExportAll", exportAllViewModel);
     }
 }
