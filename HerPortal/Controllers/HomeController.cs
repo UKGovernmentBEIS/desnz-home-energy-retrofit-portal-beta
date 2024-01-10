@@ -30,22 +30,35 @@ public class HomeController : Controller
         var userEmailAddress = HttpContext.User.GetEmailAddress();
         var userData = await userService.GetUserByEmailAsync(userEmailAddress);
 
-        var csvFilePage = await csvFileService.GetPaginatedFileDataForUserAsync(userEmailAddress, custodianCodes, page, PageSize);
-
-        string GetPageLink(int pageNumber) => Url.Action(nameof(Index), "Home", new RouteValueDictionary() { { "custodianCodes", custodianCodes }, { "page", pageNumber } });
-
-        var homepageViewModel = new HomepageViewModel
-        (
-            userData,
-            csvFilePage,
-            GetPageLink
-        );
-
         if (!userData.HasLoggedIn)
         {
             await userService.MarkUserAsHavingLoggedInAsync(userData.Id);
         }
-        return View("ReferralFiles", homepageViewModel);
+
+        var permission = "admin";
+
+        switch (permission)
+        {
+            case "admin":
+                var adminViewModel = new AdminViewModel();
+                
+                return View("Admin", adminViewModel);
+            default:
+
+                var csvFilePage = await csvFileService.GetPaginatedFileDataForUserAsync(userEmailAddress, custodianCodes, page, PageSize);
+
+                string GetPageLink(int pageNumber) => Url.Action(nameof(Index), "Home", new RouteValueDictionary() { { "custodianCodes", custodianCodes }, { "page", pageNumber } });
+                
+                var homepageViewModel = new HomepageViewModel
+                (
+                    userData,
+                    csvFilePage,
+                    GetPageLink
+                );
+                
+                return View("ReferralFiles", homepageViewModel);
+        }
+        
     }
 
     [HttpGet("/supporting-documents")]
