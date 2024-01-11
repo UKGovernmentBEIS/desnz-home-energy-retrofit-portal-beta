@@ -28,8 +28,9 @@ public class HomeFileControllerTests
         mockDataAccessProvider = new Mock<IDataAccessProvider>();
         mockCsvFileService = new Mock<ICsvFileService>();
         var userDataStore = new UserService(mockDataAccessProvider.Object);
+        var laService = new LaService(mockDataAccessProvider.Object);
 
-        underTest = new HomeController(userDataStore, mockCsvFileService.Object);
+        underTest = new HomeController(userDataStore, mockCsvFileService.Object, laService);
         underTest.ControllerContext.HttpContext = new HttpContextBuilder(EmailAddress).Build();
         underTest.Url = new Mock<IUrlHelper>().Object;
     }

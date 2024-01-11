@@ -50,6 +50,7 @@ namespace HerPortal
 
             services.AddMemoryCache();
             services.AddScoped<UserService>();
+            services.AddScoped<LaService>();
             services.AddScoped<IDataAccessProvider, DataAccessProvider>();
             services.AddScoped<ICsvFileService, CsvFileService>();
             services.AddSingleton<StaticAssetsVersioningService>();

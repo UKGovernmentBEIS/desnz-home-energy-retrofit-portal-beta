@@ -14,15 +14,18 @@ public class HomeController : Controller
 {
     private readonly UserService userService;
     private readonly ICsvFileService csvFileService;
+    private readonly LaService laService;
     private const int PageSize = 20;
 
     public HomeController
     (
         UserService userService,
-        ICsvFileService csvFileService
+        ICsvFileService csvFileService,
+        LaService laService
     ) {
         this.userService = userService;
         this.csvFileService = csvFileService;
+        this.laService = laService;
     }
     
     [HttpGet("/")]
@@ -41,7 +44,7 @@ public class HomeController : Controller
         switch (permission)
         {
             case "admin":
-                var localAuthorities = await userService.GetAllLocalAuthoritiesAsync();
+                var localAuthorities = await laService.GetAllLocalAuthoritiesAsync();
                 
                 var localAuthoritiesViewModel = new LocalAuthoritiesViewModel(localAuthorities.ToList());
                 

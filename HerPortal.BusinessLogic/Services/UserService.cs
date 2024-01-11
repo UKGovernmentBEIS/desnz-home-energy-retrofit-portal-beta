@@ -18,11 +18,6 @@ public class UserService
         return user;
     }
 
-    public async Task<IEnumerable<LocalAuthority>> GetAllLocalAuthoritiesAsync()
-    {
-        return await dataAccessProvider.GetAllLocalAuthoritiesAsync();
-    }
-
     public async Task MarkUserAsHavingLoggedInAsync(int userId)
     {
         await dataAccessProvider.MarkUserAsHavingLoggedInAsync(userId);
