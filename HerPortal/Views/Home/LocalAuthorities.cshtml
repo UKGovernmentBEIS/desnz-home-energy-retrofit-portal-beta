@@ -47,12 +47,16 @@
                 {
                     new()
                     {
-                        Text = LocalAuthorityData.LocalAuthorityNamesByCustodianCode[la.CustodianCode]
+                        Text = la.Name
                     },
                     new()
                     {
-                        Html = @<text>@(await Html.GovUkTag(new TagViewModel { Classes = "govuk-tag--green", Text = "Active" }))</text>
-                        
+                        Html = @<text>@await Html.GovUkTag(la.Status switch
+                                      {
+                                          LocalAuthorityStatus.Live => new TagViewModel { Classes = "govuk-tag--green", Text = "Live" },
+                                          LocalAuthorityStatus.Pending => new TagViewModel { Classes = "govuk-tag--yellow", Text = "Pending" },
+                                          _ => new TagViewModel { Classes = "govuk-tag--red", Text = "Not Taking Part" },
+                                      })</text>
                     },
                     new()
                     {
