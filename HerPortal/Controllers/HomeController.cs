@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HerPortal.BusinessLogic.Services;
 using HerPortal.BusinessLogic.Services.CsvFileService;
@@ -40,7 +41,9 @@ public class HomeController : Controller
         switch (permission)
         {
             case "admin":
-                var localAuthoritiesViewModel = new LocalAuthoritiesViewModel();
+                var localAuthorities = await userService.GetAllLocalAuthoritiesAsync();
+                
+                var localAuthoritiesViewModel = new LocalAuthoritiesViewModel(localAuthorities.ToList());
                 
                 return View("LocalAuthorities", localAuthoritiesViewModel);
             default:

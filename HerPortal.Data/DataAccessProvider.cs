@@ -102,4 +102,9 @@ public class DataAccessProvider : IDataAccessProvider
         
         await context.SaveChangesAsync();
     }
+
+    public async Task<IEnumerable<LocalAuthority>> GetAllLocalAuthoritiesAsync()
+    {
+        return await context.LocalAuthorities.ToListAsync();
+    }
 }
