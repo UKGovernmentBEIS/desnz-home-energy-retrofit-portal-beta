@@ -92,6 +92,9 @@ namespace HerPortal.Data.Migrations
                     b.Property<string>("CustodianCode")
                         .HasColumnType("text");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
                     b.Property<uint>("xmin")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
