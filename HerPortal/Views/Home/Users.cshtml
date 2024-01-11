@@ -29,7 +29,7 @@
         {
             new()
             {
-                Text = "Name"
+                Text = "Email"
             },
             new()
             {
@@ -40,47 +40,25 @@
                 Text = "Actions"
             }
         },
-        Rows = new List<TableRowViewModel>
+        Rows = Model.Users.Select(user => new TableRowViewModel
         {
-            new() 
+            Row = new List<TableCellViewModel>
             {
-                Row = new List<TableCellViewModel>
+                new()
                 {
-                    new()
-                    {
-                        Text = "Sammy"
-                    },
-                    new()
-                    {
-                        Html = @<text>@(await Html.GovUkTag(new TagViewModel { Classes = "govuk-tag--green", Text = "Verified" }))</text>
-                        
-                    },
-                    new()
-                    {
-                        Html = @<text>@(await Html.GovUkButton(new ButtonViewModel { Text = "Edit" }))</text>
-                    },
-                }
-            },
-            new() 
-            {
-                Row = new List<TableCellViewModel>
+                    Text = user.EmailAddress
+                },
+                new()
                 {
-                    new()
-                    {
-                        Text = "Tom"
-                    },
-                    new()
-                    {
-                        Html = @<text>@(await Html.GovUkTag(new TagViewModel { Classes = "govuk-tag--yellow", Text = "Pending Verification" }))</text>
-                        
-                    },
-                    new()
-                    {
-                        Html = @<text>@(await Html.GovUkButton(new ButtonViewModel { Text = "Edit" }))</text>
-                    },
-                }
+                    Html = @<text>@(await Html.GovUkTag(new TagViewModel { Classes = "govuk-tag--green", Text = "Verified" }))</text>
+                },
+                new()
+                {
+                    Html = @<text>@(await Html.GovUkButton(new ButtonViewModel { Text = "Edit" }))</text>
+                },
             }
-        }
+        
+        }).ToList()
     }
 ))
 </div>

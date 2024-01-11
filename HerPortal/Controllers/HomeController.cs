@@ -74,9 +74,10 @@ public class HomeController : Controller
     }
 
     [HttpGet("/users")]
-    public IActionResult Users()
+    public async Task<IActionResult> Users()
     {
-        var usersViewModel = new UsersViewModel();
+        var users = await userService.GetAllUsersAsync();
+        var usersViewModel = new UsersViewModel(users.ToList());
         return View("Users", usersViewModel);
     }
 

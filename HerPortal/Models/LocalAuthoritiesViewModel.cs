@@ -9,7 +9,7 @@ namespace HerPortal.Models;
 
 public class LocalAuthoritiesViewModel
 {
-    public List<LocalAuthority> LocalAuthorities;
+    public List<LocalAuthority> LocalAuthorities { get; }
     
     public LocalAuthoritiesViewModel(List<LocalAuthority> localAuthorities)
     {

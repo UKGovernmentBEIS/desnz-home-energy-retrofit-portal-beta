@@ -18,6 +18,11 @@ public class UserService
         return user;
     }
 
+    public async Task<IEnumerable<User>> GetAllUsersAsync()
+    {
+        return await dataAccessProvider.GetAllUsersAsync();
+    }
+
     public async Task MarkUserAsHavingLoggedInAsync(int userId)
     {
         await dataAccessProvider.MarkUserAsHavingLoggedInAsync(userId);

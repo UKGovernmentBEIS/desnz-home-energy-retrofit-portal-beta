@@ -48,6 +48,12 @@ public class DataAccessProvider : IDataAccessProvider
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<User>> GetAllUsersAsync()
+    {
+        return await context.Users
+            .ToListAsync();
+    }
+
     public async Task<List<CsvFileDownload>> GetCsvFileDownloadDataForUserAsync(int userId)
     {
         return await context.CsvFileDownloads.Where(cfd => cfd.UserId == userId).ToListAsync();

@@ -9,8 +9,10 @@ namespace HerPortal.Models;
 
 public class UsersViewModel
 {
-    public UsersViewModel()
+    public List<User> Users { get; }
+    
+    public UsersViewModel(List<User> users)
     {
-        
+        Users = users;
     }
 }
