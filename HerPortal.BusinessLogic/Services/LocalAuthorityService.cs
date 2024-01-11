@@ -2,11 +2,11 @@
 
 namespace HerPortal.BusinessLogic.Services;
 
-public class LaService
+public class LocalAuthorityService
 {
     private readonly IDataAccessProvider dataAccessProvider;
 
-    public LaService(IDataAccessProvider dataAccessProvider)
+    public LocalAuthorityService(IDataAccessProvider dataAccessProvider)
     {
         this.dataAccessProvider = dataAccessProvider;
     }
@@ -14,5 +14,10 @@ public class LaService
     public async Task<IEnumerable<LocalAuthority>> GetAllLocalAuthoritiesAsync()
     {
         return await dataAccessProvider.GetAllLocalAuthoritiesAsync();
+    }
+
+    public async Task<LocalAuthority> GetLocalAuthorityByIdAsync(int id)
+    {
+        return await dataAccessProvider.GetLocalAuthorityByIdAsync(id);
     }
 }

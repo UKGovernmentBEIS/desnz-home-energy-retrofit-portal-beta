@@ -11,4 +11,5 @@ public interface IDataAccessProvider
     public Task<List<CsvFileDownload>> GetCsvFileDownloadDataForUserAsync(int userId);
     public Task MarkCsvFileAsDownloadedAsync(string custodianCode, int year, int month, int userId);
     public Task<IEnumerable<LocalAuthority>> GetAllLocalAuthoritiesAsync();
+    public Task<LocalAuthority> GetLocalAuthorityByIdAsync(int id);
 }

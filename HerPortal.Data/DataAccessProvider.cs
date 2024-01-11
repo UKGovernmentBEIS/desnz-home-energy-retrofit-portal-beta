@@ -113,4 +113,10 @@ public class DataAccessProvider : IDataAccessProvider
     {
         return await context.LocalAuthorities.ToListAsync();
     }
+
+    public async Task<LocalAuthority> GetLocalAuthorityByIdAsync(int id)
+    {
+        return await context.LocalAuthorities
+            .SingleAsync(la => la.Id == id);
+    }
 }
