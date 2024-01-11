@@ -22,4 +22,66 @@
     </nav>
 }
 
-<p>Users</p>
+<div class="horizontally-scrollable">
+    @(await Html.GovUkTable(new TableGovUkViewModel
+    {
+        Head = new List<TableCellViewModel>
+        {
+            new()
+            {
+                Text = "Name"
+            },
+            new()
+            {
+                Text = "State"
+            },
+            new()
+            {
+                Text = "Actions"
+            }
+        },
+        Rows = new List<TableRowViewModel>
+        {
+            new() 
+            {
+                Row = new List<TableCellViewModel>
+                {
+                    new()
+                    {
+                        Text = "Sammy"
+                    },
+                    new()
+                    {
+                        Html = @<text>@(await Html.GovUkTag(new TagViewModel { Classes = "govuk-tag--green", Text = "Verified" }))</text>
+                        
+                    },
+                    new()
+                    {
+                        Html = @<text>@(await Html.GovUkButton(new ButtonViewModel { Text = "Edit" }))</text>
+                    },
+                }
+            },
+            new() 
+            {
+                Row = new List<TableCellViewModel>
+                {
+                    new()
+                    {
+                        Text = "Tom"
+                    },
+                    new()
+                    {
+                        Html = @<text>@(await Html.GovUkTag(new TagViewModel { Classes = "govuk-tag--yellow", Text = "Pending Verification" }))</text>
+                        
+                    },
+                    new()
+                    {
+                        Html = @<text>@(await Html.GovUkButton(new ButtonViewModel { Text = "Edit" }))</text>
+                    },
+                }
+            }
+        }
+    }
+))
+</div>
+
