@@ -10,6 +10,7 @@ public interface IDataAccessProvider
     public Task MarkUserAsHavingLoggedInAsync(int userId);
     public Task<IEnumerable<User>> GetAllUsersAsync();
     public Task<IEnumerable<User>> GetAllActiveUsersAsync();
+    public Task AddUserByEmailAsync(string emailAddress);
     public Task<List<CsvFileDownload>> GetCsvFileDownloadDataForUserAsync(int userId);
     public Task MarkCsvFileAsDownloadedAsync(string custodianCode, int year, int month, int userId);
     public Task<IEnumerable<LocalAuthority>> GetAllLocalAuthoritiesAsync();

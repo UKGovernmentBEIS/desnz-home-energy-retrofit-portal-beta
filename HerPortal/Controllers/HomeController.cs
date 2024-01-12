@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HerPortal.BusinessLogic.Models.Enums;
@@ -107,7 +108,7 @@ public class HomeController : Controller
     [HttpGet("/user/{id}/")]
     public async Task<IActionResult> UserGet(string id)
     {
-        var user = await userService.GetUserByEmailAsync("samuel.young@softwire.com");
+        var user = await userService.GetUserByIdAsync(int.Parse(id));
         var localAuthorities = await localAuthorityService.GetAllLocalAuthoritiesAsync();
         var editUserViewModel = new EditUserViewModel(user, localAuthorities.ToList());
         return View("EditUser", editUserViewModel);
@@ -123,6 +124,22 @@ public class HomeController : Controller
                 .Select(int.Parse);
 
         await userService.SetUserLocalAuthoritiesByIdAsync(int.Parse(id), selectedLocalAuthorityIds.ToList());
+        
+        return RedirectToAction("Users");
+    }
+
+    [HttpGet("/adduser")]
+    public IActionResult AddUserGet()
+    {
+        var addUserViewModel = new AddUserViewModel();
+        
+        return View("AddUser", addUserViewModel);
+    }
+
+    [HttpPost("/adduser")]
+    public async Task<IActionResult> AddUserPost(AddUserViewModel addUserViewModel)
+    {
+        await userService.AddUserByEmailAsync(addUserViewModel.Email);
         
         return RedirectToAction("Users");
     }

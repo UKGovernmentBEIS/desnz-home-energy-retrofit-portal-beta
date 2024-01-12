@@ -24,6 +24,12 @@
     </nav>
 }
 
+@await Html.GovUkButton(new ButtonViewModel
+{
+    Href = Url.Action(nameof(HomeController.AddUserGet), "Home"),
+    Text = "Add User"
+}) 
+
 <div class="horizontally-scrollable">
     @(await Html.GovUkTable(new TableGovUkViewModel
     {

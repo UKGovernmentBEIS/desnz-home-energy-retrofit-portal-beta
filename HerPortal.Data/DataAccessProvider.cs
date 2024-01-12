@@ -56,6 +56,17 @@ public class DataAccessProvider : IDataAccessProvider
             .ToListAsync();
     }
 
+    public async Task AddUserByEmailAsync(string emailAddress)
+    {
+        await context.Users.AddAsync(new User
+        {
+            EmailAddress = emailAddress,
+            HasLoggedIn = false
+        });
+
+        await context.SaveChangesAsync();
+    }
+
     public async Task<IEnumerable<User>> GetAllUsersAsync()
     {
         return await context.Users
