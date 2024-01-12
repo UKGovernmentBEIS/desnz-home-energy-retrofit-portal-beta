@@ -35,10 +35,6 @@
             },
             new()
             {
-                Text = "State"
-            },
-            new()
-            {
                 Text = "Actions"
             }
         },
@@ -52,11 +48,7 @@
                 },
                 new()
                 {
-                    Html = @<text>@(await Html.GovUkTag(new TagViewModel { Classes = "govuk-tag--green", Text = "Verified" }))</text>
-                },
-                new()
-                {
-                    Html = @<a href="@Url.Action(nameof(HomeController.UserGet), "Home", new RouteValueDictionary(new { id = user.Id }))">Edit</a>
+                    Html = @<a href="@Url.Action(nameof(HomeController.UserGet), "Home", new RouteValueDictionary(new { id = user.Id }))">Assign LAs</a>
                 },
             }
         
