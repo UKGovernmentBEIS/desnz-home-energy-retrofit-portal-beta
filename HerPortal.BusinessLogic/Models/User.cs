@@ -6,5 +6,7 @@ public class User
     public string EmailAddress { get; set; }
     public bool HasLoggedIn { get; set; }
     
+    public bool Disabled { get; set; }
+    
     public List<LocalAuthority> LocalAuthorities { get; set; }
 }
