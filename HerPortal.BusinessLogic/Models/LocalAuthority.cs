@@ -1,12 +1,6 @@
-﻿namespace HerPortal.BusinessLogic.Models;
+﻿using HerPortal.BusinessLogic.Models.Enums;
 
-public enum LocalAuthorityStatus
-{
-    NotTakingPart = 0,
-    Pending = 1,
-    Live = 2
-}
-
+namespace HerPortal.BusinessLogic.Models;
 public class LocalAuthority
 {
     public int Id { get; set; }

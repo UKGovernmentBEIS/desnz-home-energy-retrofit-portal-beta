@@ -89,10 +89,18 @@ public class HomeController : Controller
     }
 
     [HttpGet("/local-authority/{id}/")]
-    public async Task<IActionResult> LocalAuthority(string id)
+    public async Task<IActionResult> LocalAuthorityGet(string id)
     {
         var localAuthority = await localAuthorityService.GetLocalAuthorityByIdAsync(int.Parse(id));
         var editLocalAuthorityViewModel = new EditLocalAuthorityViewModel(localAuthority);
-        return View("LocalAuthority", editLocalAuthorityViewModel);
+        return View("LocalAuthorityGet", editLocalAuthorityViewModel);
+    }
+
+    [HttpPost("/local-authority/{id}/")]
+    public async Task<IActionResult> LocalAuthorityPost(string id)
+    {
+        var localAuthority = await localAuthorityService.GetLocalAuthorityByIdAsync(int.Parse(id));
+        var editLocalAuthorityViewModel = new EditLocalAuthorityViewModel(localAuthority);
+        return View("LocalAuthorityGet", editLocalAuthorityViewModel);
     }
 }

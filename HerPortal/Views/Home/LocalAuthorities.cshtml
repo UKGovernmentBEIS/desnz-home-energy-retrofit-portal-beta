@@ -1,7 +1,7 @@
 ﻿@model HerPortal.Models.LocalAuthoritiesViewModel
 @using GovUkDesignSystem
 @using GovUkDesignSystem.GovUkDesignSystemComponents
-@using HerPortal.BusinessLogic.Models
+@using HerPortal.BusinessLogic.Models.Enums
 @using HerPortal.Controllers
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Microsoft.AspNetCore.Routing
@@ -63,7 +63,7 @@
                     },
                     new()
                     {
-                        Html = @<a href="@Url.Action(nameof(HomeController.LocalAuthority), "Home", new RouteValueDictionary(new { id = la.Id }))">Edit</a>
+                        Html = @<a href="@Url.Action(nameof(HomeController.LocalAuthorityGet), "Home", new RouteValueDictionary(new { id = la.Id }))">Edit</a>
                     },
                 }
             }).ToList()

@@ -1,5 +1,8 @@
 ﻿@model HerPortal.Models.EditLocalAuthorityViewModel
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using HerPortal.Controllers
+@using GovUkDesignSystem
+@using GovUkDesignSystem.GovUkDesignSystemComponents
 @{
     ViewBag.Title = "Admin - Home Energy Retrofit Portal BETA";   
 }
@@ -22,5 +25,15 @@
 }
 
 <p>@(Model.LocalAuthority.Name)</p>
-<p>@(Model.LocalAuthority.CustodianCode)</p>
-<p>@(Model.LocalAuthority.Status)</p>
+
+<form action="@Url.Action(nameof(HomeController.LocalAuthorityPost), "Home")" method="post" novalidate>
+    @Html.AntiForgeryToken()
+
+    @(await Html.GovUkRadiosFor(m => m.LocalAuthorityStatus))
+
+    @(await Html.GovUkButton(new ButtonViewModel
+    {
+        Text = "Submit",
+    }))
+</form>
+
