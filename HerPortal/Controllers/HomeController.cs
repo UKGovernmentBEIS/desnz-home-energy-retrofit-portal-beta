@@ -116,11 +116,14 @@ public class HomeController : Controller
     [HttpPost("/user/{id}/")]
     public async Task<IActionResult> UserPost(EditUserViewModel editUserViewModel, string id)
     {
-        foreach (var selectedLocalAuthority in editUserViewModel.SelectedLocalAuthorities)
-        {
-            
-        }
+        // the checkboxes send an additional dummy value, must filter it out
+        var selectedLocalAuthorityIds =
+            editUserViewModel.SelectedLocalAuthorityIds
+                .Where(localAuthorityId => int.TryParse(localAuthorityId, out _))
+                .Select(int.Parse);
 
+        await userService.SetUserLocalAuthoritiesByIdAsync(int.Parse(id), selectedLocalAuthorityIds.ToList());
+        
         return RedirectToAction("Users");
     }
 }

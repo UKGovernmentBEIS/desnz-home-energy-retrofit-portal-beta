@@ -28,7 +28,7 @@
     @Html.AntiForgeryToken()
 
     @(await Html.GovUkCheckboxesFromStringsFor(
-            m => m.SelectedLocalAuthorities,
+            m => m.SelectedLocalAuthorityIds,
             checkboxOptions: Model.LocalAuthorityCheckboxLabels
             )
     )

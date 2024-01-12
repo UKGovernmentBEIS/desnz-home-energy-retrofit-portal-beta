@@ -27,4 +27,9 @@ public class UserService
     {
         await dataAccessProvider.MarkUserAsHavingLoggedInAsync(userId);
     }
+
+    public async Task SetUserLocalAuthoritiesByIdAsync(int userId, List<int> localAuthorityIds)
+    {
+        await dataAccessProvider.SetUserLocalAuthoritiesByIdAsync(userId, localAuthorityIds);
+    }
 }

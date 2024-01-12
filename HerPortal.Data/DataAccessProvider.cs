@@ -32,6 +32,13 @@ public class DataAccessProvider : IDataAccessProvider
                 ));
     }
 
+    public async Task<User> GetUserByIdAsync(int id)
+    {
+        return await context.Users
+            .Include(u => u.LocalAuthorities)
+            .SingleAsync(user => user.Id == id);
+    }
+
     public async Task MarkUserAsHavingLoggedInAsync(int userId)
     {
         var user = await context.Users
@@ -128,6 +135,16 @@ public class DataAccessProvider : IDataAccessProvider
             .SingleAsync(la => la.Id == id);
 
         localAuthority.Status = status;
+
+        await context.SaveChangesAsync();
+    }
+
+    public async Task SetUserLocalAuthoritiesByIdAsync(int userId, List<int> localAuthorityIds)
+    {
+        var user = await GetUserByIdAsync(userId);
+        var localAuthorities = context.LocalAuthorities.Where(la => localAuthorityIds.Contains(la.Id));
+
+        user.LocalAuthorities = localAuthorities.ToList();
 
         await context.SaveChangesAsync();
     }
