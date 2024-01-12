@@ -1,6 +1,8 @@
 ﻿@model HerPortal.Models.UsersViewModel
 @using GovUkDesignSystem
 @using GovUkDesignSystem.GovUkDesignSystemComponents
+@using HerPortal.Controllers
+@using Microsoft.AspNetCore.Routing
 @{
     ViewBag.Title = "Admin - Home Energy Retrofit Portal BETA";   
 }
@@ -54,7 +56,7 @@
                 },
                 new()
                 {
-                    Html = @<text>@(await Html.GovUkButton(new ButtonViewModel { Text = "Edit" }))</text>
+                    Html = @<a href="@Url.Action(nameof(HomeController.UserGet), "Home", new RouteValueDictionary(new { id = user.Id }))">Edit</a>
                 },
             }
         

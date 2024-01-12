@@ -94,7 +94,7 @@ public class HomeController : Controller
     {
         var localAuthority = await localAuthorityService.GetLocalAuthorityByIdAsync(int.Parse(id));
         var editLocalAuthorityViewModel = new EditLocalAuthorityViewModel(localAuthority);
-        return View("LocalAuthority", editLocalAuthorityViewModel);
+        return View("EditLocalAuthority", editLocalAuthorityViewModel);
     }
 
     [HttpPost("/local-authority/{id}/")]
@@ -102,5 +102,25 @@ public class HomeController : Controller
     {
         await localAuthorityService.SetLocalAuthorityStatusById(int.Parse(id), editLocalAuthorityViewModel.Status ?? LocalAuthorityStatus.NotTakingPart);
         return RedirectToAction("Index");
+    }
+
+    [HttpGet("/user/{id}/")]
+    public async Task<IActionResult> UserGet(string id)
+    {
+        var user = await userService.GetUserByEmailAsync("samuel.young@softwire.com");
+        var localAuthorities = await localAuthorityService.GetAllLocalAuthoritiesAsync();
+        var editUserViewModel = new EditUserViewModel(user, localAuthorities.ToList());
+        return View("EditUser", editUserViewModel);
+    }
+
+    [HttpPost("/user/{id}/")]
+    public async Task<IActionResult> UserPost(EditUserViewModel editUserViewModel, string id)
+    {
+        foreach (var selectedLocalAuthority in editUserViewModel.SelectedLocalAuthorities)
+        {
+            
+        }
+
+        return RedirectToAction("Users");
     }
 }
