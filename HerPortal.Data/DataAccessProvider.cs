@@ -1,5 +1,6 @@
 ﻿using HerPortal.BusinessLogic;
 using HerPortal.BusinessLogic.Models;
+using HerPortal.BusinessLogic.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace HerPortal.Data;
@@ -118,5 +119,16 @@ public class DataAccessProvider : IDataAccessProvider
     {
         return await context.LocalAuthorities
             .SingleAsync(la => la.Id == id);
+    }
+
+    public async Task SetLocalAuthorityStatusById(int id, LocalAuthorityStatus status)
+    {
+        var localAuthority = await context
+            .LocalAuthorities
+            .SingleAsync(la => la.Id == id);
+
+        localAuthority.Status = status;
+
+        await context.SaveChangesAsync();
     }
 }

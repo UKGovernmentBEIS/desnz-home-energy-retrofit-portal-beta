@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HerPortal.BusinessLogic.Models.Enums;
 using HerPortal.BusinessLogic.Services;
 using HerPortal.BusinessLogic.Services.CsvFileService;
 using HerPortal.Helpers;
@@ -93,14 +94,13 @@ public class HomeController : Controller
     {
         var localAuthority = await localAuthorityService.GetLocalAuthorityByIdAsync(int.Parse(id));
         var editLocalAuthorityViewModel = new EditLocalAuthorityViewModel(localAuthority);
-        return View("LocalAuthorityGet", editLocalAuthorityViewModel);
+        return View("LocalAuthority", editLocalAuthorityViewModel);
     }
 
     [HttpPost("/local-authority/{id}/")]
-    public async Task<IActionResult> LocalAuthorityPost(string id)
+    public async Task<IActionResult> LocalAuthorityPost(EditLocalAuthorityViewModel editLocalAuthorityViewModel, string id)
     {
-        var localAuthority = await localAuthorityService.GetLocalAuthorityByIdAsync(int.Parse(id));
-        var editLocalAuthorityViewModel = new EditLocalAuthorityViewModel(localAuthority);
-        return View("LocalAuthorityGet", editLocalAuthorityViewModel);
+        await localAuthorityService.SetLocalAuthorityStatusById(int.Parse(id), editLocalAuthorityViewModel.Status ?? LocalAuthorityStatus.NotTakingPart);
+        return RedirectToAction("Index");
     }
 }

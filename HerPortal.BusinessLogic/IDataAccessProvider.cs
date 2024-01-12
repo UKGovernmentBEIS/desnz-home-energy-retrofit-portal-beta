@@ -1,4 +1,5 @@
 ﻿using HerPortal.BusinessLogic.Models;
+using HerPortal.BusinessLogic.Models.Enums;
 
 namespace HerPortal.BusinessLogic;
 
@@ -12,4 +13,5 @@ public interface IDataAccessProvider
     public Task MarkCsvFileAsDownloadedAsync(string custodianCode, int year, int month, int userId);
     public Task<IEnumerable<LocalAuthority>> GetAllLocalAuthoritiesAsync();
     public Task<LocalAuthority> GetLocalAuthorityByIdAsync(int id);
+    public Task SetLocalAuthorityStatusById(int id, LocalAuthorityStatus status);
 }

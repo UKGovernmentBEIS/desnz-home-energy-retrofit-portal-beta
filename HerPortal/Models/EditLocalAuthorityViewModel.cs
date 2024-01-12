@@ -5,13 +5,16 @@ namespace HerPortal.Models;
 
 public class EditLocalAuthorityViewModel
 {
-    public LocalAuthority LocalAuthority { get; }
-
-    public LocalAuthorityStatus? LocalAuthorityStatus { get; set; }
+    public string? Name { get; set; }
+    public LocalAuthorityStatus? Status { get; set; }
 
     public EditLocalAuthorityViewModel(LocalAuthority localAuthority)
     {
-        LocalAuthority = localAuthority;
-        LocalAuthorityStatus = localAuthority.Status;
+        Name = localAuthority.Name;
+        Status = localAuthority.Status;
+    }
+
+    public EditLocalAuthorityViewModel()
+    {
     }
 }

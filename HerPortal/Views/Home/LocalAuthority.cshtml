@@ -24,12 +24,12 @@
     </nav>
 }
 
-<p>@(Model.LocalAuthority.Name)</p>
+<p>@(Model.Name)</p>
 
 <form action="@Url.Action(nameof(HomeController.LocalAuthorityPost), "Home")" method="post" novalidate>
     @Html.AntiForgeryToken()
 
-    @(await Html.GovUkRadiosFor(m => m.LocalAuthorityStatus))
+    @(await Html.GovUkRadiosFor(m => m.Status))
 
     @(await Html.GovUkButton(new ButtonViewModel
     {
