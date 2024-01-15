@@ -45,8 +45,8 @@ public class UserService
         await dataAccessProvider.SetUserLocalAuthoritiesByIdAsync(userId, localAuthorityIds);
     }
 
-    public async Task SetUserDisabledByIdAsync(int userId, bool disabled)
+    public async Task SetUserEnabledByIdAsync(int userId, bool enabled)
     {
-        await dataAccessProvider.SetUserDisabledByIdAsync(userId, disabled);
+        await dataAccessProvider.SetUserEnabledByIdAsync(userId, enabled);
     }
 }

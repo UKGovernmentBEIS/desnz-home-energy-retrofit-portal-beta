@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HerPortal.Data.Migrations
 {
     [DbContext(typeof(HerDbContext))]
-    [Migration("20240112165939_UserDisabledField")]
-    partial class UserDisabledField
+    [Migration("20240112165939_UserEnabledField")]
+    partial class UserEnabledField
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -121,7 +121,7 @@ namespace HerPortal.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Disabled")
+                    b.Property<bool>("Enabled")
                         .HasColumnType("boolean");
 
                     b.Property<string>("EmailAddress")

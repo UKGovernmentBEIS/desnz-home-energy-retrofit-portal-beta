@@ -5,16 +5,16 @@ using HerPortal.BusinessLogic.Models;
 
 namespace HerPortal.Models;
 
-public class EditUserDisabledViewModel
+public class EditUserEnabledViewModel
 {
-    public bool Disabled;
+    public bool Enabled;
 
-    public EditUserDisabledViewModel(User user)
+    public EditUserEnabledViewModel(User user)
     {
-        Disabled = user.Disabled;
+        Enabled = user.Enabled;
     }
 
-    public EditUserDisabledViewModel()
+    public EditUserEnabledViewModel()
     {
         
     }

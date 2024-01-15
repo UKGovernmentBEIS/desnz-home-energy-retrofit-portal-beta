@@ -145,17 +145,17 @@ public class HomeController : Controller
     }
 
     [HttpGet("/user-disable/{id}/")]
-    public async Task<IActionResult> UserDisableGet(string id)
+    public async Task<IActionResult> UserEnabledGet(string id)
     {
         var user = await userService.GetUserByIdAsync(int.Parse(id));
-        var editUserDisabledViewModel = new EditUserDisabledViewModel(user);
-        return View("EditUserDisabled", editUserDisabledViewModel);
+        var editUserDisabledViewModel = new EditUserEnabledViewModel(user);
+        return View("EditUserEnabled", editUserDisabledViewModel);
     }
 
     [HttpPost("/user-disable/{id}/")]
-    public async Task<IActionResult> UserDisablePost([FromForm] bool disabled, string id)
+    public async Task<IActionResult> UserEnabledPost([FromForm] bool enabled, string id)
     {
-        await userService.SetUserDisabledByIdAsync(int.Parse(id), disabled);
+        await userService.SetUserEnabledByIdAsync(int.Parse(id), enabled);
         
         return RedirectToAction("Users");
     }

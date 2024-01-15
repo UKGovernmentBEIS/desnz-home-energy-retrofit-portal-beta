@@ -119,7 +119,7 @@ namespace HerPortal.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Disabled")
+                    b.Property<bool>("Enabled")
                         .HasColumnType("boolean");
 
                     b.Property<string>("EmailAddress")

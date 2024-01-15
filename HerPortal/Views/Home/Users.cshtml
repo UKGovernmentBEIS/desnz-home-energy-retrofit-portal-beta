@@ -56,7 +56,7 @@
                 {
                     Html = @<div>
                                <a href="@Url.Action(nameof(HomeController.UserLaGet), "Home", new RouteValueDictionary(new { id = user.Id }))">Assign LAs</a>
-                               <a href="@Url.Action(nameof(HomeController.UserDisableGet), "Home", new RouteValueDictionary(new { id = user.Id }))">Disable</a>
+                               <a href="@Url.Action(nameof(HomeController.UserEnabledGet), "Home", new RouteValueDictionary(new { id = user.Id }))">@(user.Enabled ? "Disable" : "Enable")</a>
                            </div>
                 },
             }

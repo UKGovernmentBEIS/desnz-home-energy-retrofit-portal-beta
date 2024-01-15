@@ -4,22 +4,22 @@
 
 namespace HerPortal.Data.Migrations
 {
-    public partial class UserDisabledField : Migration
+    public partial class UserEnabledField : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<bool>(
-                name: "Disabled",
+                name: "Enabled",
                 table: "Users",
                 type: "boolean",
                 nullable: false,
-                defaultValue: false);
+                defaultValue: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Disabled",
+                name: "Enabled",
                 table: "Users");
         }
     }

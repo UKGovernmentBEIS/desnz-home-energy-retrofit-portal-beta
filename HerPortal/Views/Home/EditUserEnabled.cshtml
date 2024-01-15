@@ -1,4 +1,4 @@
-﻿@model HerPortal.Models.EditUserDisabledViewModel
+﻿@model HerPortal.Models.EditUserEnabledViewModel
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using HerPortal.Controllers
 @using GovUkDesignSystem
@@ -24,14 +24,14 @@
     </nav>
 }
 
-<form action="@Url.Action(nameof(HomeController.UserDisablePost), "Home")" method="post" novalidate>
+<form action="@Url.Action(nameof(HomeController.UserEnabledPost), "Home")" method="post" novalidate>
     @Html.AntiForgeryToken()
 
     @(await Html.GovUkCheckboxFromBoolFor(
-            m => m.Disabled,
+            m => m.Enabled,
             label: new LabelViewModel()
             {
-                Text = "Disable"
+                Text = "Enabled"
             })
     )
 

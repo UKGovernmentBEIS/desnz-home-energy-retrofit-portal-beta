@@ -17,5 +17,5 @@ public interface IDataAccessProvider
     public Task<LocalAuthority> GetLocalAuthorityByIdAsync(int id);
     public Task SetLocalAuthorityStatusById(int id, LocalAuthorityStatus status);
     public Task SetUserLocalAuthoritiesByIdAsync(int userId, List<int> localAuthorityIds);
-    public Task SetUserDisabledByIdAsync(int userId, bool disabled);
+    public Task SetUserEnabledByIdAsync(int userId, bool enabled);
 }
