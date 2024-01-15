@@ -130,7 +130,7 @@ public class DataAccessProvider : IDataAccessProvider
 
     public async Task<IEnumerable<LocalAuthority>> GetAllLocalAuthoritiesAsync()
     {
-        return await context.LocalAuthorities.ToListAsync();
+        return await context.LocalAuthorities.OrderBy(la => la.Id).ToListAsync();
     }
 
     public async Task<LocalAuthority> GetLocalAuthorityByIdAsync(int id)
