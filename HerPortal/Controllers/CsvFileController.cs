@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Security;
 using System.Threading.Tasks;
 using HerPortal.BusinessLogic.Services.CsvFileService;
@@ -65,8 +66,20 @@ public class CsvFileController : Controller
         try
         {
             var referralRecords = await csvFileService.GetAllRecordsForUserAsync(HttpContext.User.GetEmailAddress());
+            
+            var editedRecords = referralRecords
+                .OrderBy(referralRecord => referralRecord.ReferralDate)
+                .Select(referralRecord =>
+                {
+                    referralRecord.Email = "";
+                    referralRecord.Address1 = "";
+                    referralRecord.Name = "";
+                    referralRecord.Telephone = "";
 
-            file = await csvFileService.GetFileDownloadForRecordsAsync(referralRecords);
+                    return referralRecord;
+                });
+
+            file = await csvFileService.GetFileDownloadForRecordsAsync(editedRecords);
         }
         catch (SecurityException ex)
         {
