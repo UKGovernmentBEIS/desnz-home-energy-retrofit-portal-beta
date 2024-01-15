@@ -61,7 +61,8 @@ public class DataAccessProvider : IDataAccessProvider
         await context.Users.AddAsync(new User
         {
             EmailAddress = emailAddress,
-            HasLoggedIn = false
+            HasLoggedIn = false,
+            Enabled = true
         });
 
         await context.SaveChangesAsync();
