@@ -16,7 +16,7 @@ public class CsvFileService : ICsvFileService
     
     public class ReferralRecord
     {
-        public int ReferralDate { get; set; }
+        public long ReferralDate { get; set; }
         public string ReferralCode { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
@@ -29,7 +29,7 @@ public class CsvFileService : ICsvFileService
         public string Uprn { get; set; }
         public string EpcBand { get; set; }
         public bool EpcConfirmedByHomeowner { get; set; }
-        public int EpcLodgementDate { get; set; }
+        public long EpcLodgementDate { get; set; }
         public bool IfOffGasGrid { get; set; }
         public string HouseholdIncomeBand { get; set; }
         public bool IsEligible { get; set; }
@@ -149,7 +149,7 @@ public class CsvFileService : ICsvFileService
 
         var record1 = new ReferralRecord
         {
-            ReferralDate = 1,
+            ReferralDate = 638407872000000000,
             ReferralCode = "HUG20000001",
             Name = "Name 1",
             Email = "samuel@example.com",
@@ -171,7 +171,7 @@ public class CsvFileService : ICsvFileService
         
         var record2 = new ReferralRecord
         {
-            ReferralDate = 2,
+            ReferralDate = 638401824000000000,
             ReferralCode = "HUG20000002",
             Name = "Name 1",
             Email = "samuel2@example.com",

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Security;
 using System.Threading.Tasks;
+using HerPortal.BusinessLogic.Models.Enums;
 using HerPortal.BusinessLogic.Services.CsvFileService;
 using HerPortal.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -60,15 +61,19 @@ public class CsvFileController : Controller
     }
     
     [HttpGet("all")]
-    public async Task<IActionResult> ExportAllCsvFile()
+    public async Task<IActionResult> ExportAllCsvFile([FromQuery] DataExportType dataExportType)
     {
         Stream file;
+        
         try
         {
             var referralRecords = await csvFileService.GetAllRecordsForUserAsync(HttpContext.User.GetEmailAddress());
+
+            var date7DaysAgo = DateTime.Today.AddDays(-7);
             
             var editedRecords = referralRecords
                 .OrderBy(referralRecord => referralRecord.ReferralDate)
+                .Where(referralRecord => dataExportType == DataExportType.AllTime || new DateTime(referralRecord.ReferralDate) >= date7DaysAgo )
                 .Select(referralRecord =>
                 {
                     referralRecord.Email = "";
@@ -101,6 +106,6 @@ public class CsvFileController : Controller
             return Problem($"Error encountered when attempting to get CSV files.");
         }
 
-        return File(file, "text/csv", $"all.csv");
+        return File(file, "text/csv", $"data.csv");
     }
 }

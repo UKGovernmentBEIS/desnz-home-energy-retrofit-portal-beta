@@ -22,4 +22,5 @@
     </nav>
 }
 
-<a asp-controller="CsvFile" asp-action="ExportAllCsvFile">@(await Html.GovUkButton(new ButtonViewModel { Text = "Export All" }))</a>
+<a asp-controller="CsvFile" asp-action="ExportAllCsvFile" asp-route-dataExportType="Last7Days">@(await Html.GovUkButton(new ButtonViewModel { Text = "Export Last 7 Days" }))</a>
+<a asp-controller="CsvFile" asp-action="ExportAllCsvFile" asp-route-dataExportType="AllTime">@(await Html.GovUkButton(new ButtonViewModel { Text = "Export All" }))</a>
