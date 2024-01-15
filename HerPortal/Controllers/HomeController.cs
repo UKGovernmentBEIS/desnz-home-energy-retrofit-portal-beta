@@ -76,14 +76,30 @@ public class HomeController : Controller
     [HttpGet("/users")]
     public async Task<IActionResult> Users()
     {
+        var userEmailAddress = HttpContext.User.GetEmailAddress();
+        var userData = await userService.GetUserByEmailAsync(userEmailAddress);
+
+        if (userData.Role != UserRole.ServiceManager)
+        {
+            return RedirectToAction("Index");
+        }
+        
         var users = await userService.GetAllUsersAsync();
         var usersViewModel = new UsersViewModel(users.ToList());
         return View("Users", usersViewModel);
     }
 
     [HttpGet("/export-all")]
-    public IActionResult ExportAll()
+    public async Task<IActionResult> ExportAll()
     {
+        var userEmailAddress = HttpContext.User.GetEmailAddress();
+        var userData = await userService.GetUserByEmailAsync(userEmailAddress);
+
+        if (userData.Role != UserRole.ServiceManager)
+        {
+            return RedirectToAction("Index");
+        }
+        
         var exportAllViewModel = new ExportAllViewModel();
         return View("ExportAll", exportAllViewModel);
     }
@@ -91,6 +107,14 @@ public class HomeController : Controller
     [HttpGet("/local-authority/{id}/")]
     public async Task<IActionResult> LocalAuthorityGet(string id)
     {
+        var userEmailAddress = HttpContext.User.GetEmailAddress();
+        var userData = await userService.GetUserByEmailAsync(userEmailAddress);
+
+        if (userData.Role != UserRole.ServiceManager)
+        {
+            return RedirectToAction("Index");
+        }
+        
         var localAuthority = await localAuthorityService.GetLocalAuthorityByIdAsync(int.Parse(id));
         var editLocalAuthorityViewModel = new EditLocalAuthorityViewModel(localAuthority);
         return View("EditLocalAuthority", editLocalAuthorityViewModel);
@@ -106,6 +130,14 @@ public class HomeController : Controller
     [HttpGet("/user-la/{id}/")]
     public async Task<IActionResult> UserLaGet(string id)
     {
+        var userEmailAddress = HttpContext.User.GetEmailAddress();
+        var userData = await userService.GetUserByEmailAsync(userEmailAddress);
+
+        if (userData.Role != UserRole.ServiceManager)
+        {
+            return RedirectToAction("Index");
+        }
+        
         var user = await userService.GetUserByIdAsync(int.Parse(id));
         var localAuthorities = await localAuthorityService.GetAllLocalAuthoritiesAsync();
         var editUserLasViewModel = new EditUserLasViewModel(user, localAuthorities.ToList());
@@ -127,8 +159,16 @@ public class HomeController : Controller
     }
 
     [HttpGet("/adduser")]
-    public IActionResult AddUserGet()
+    public async Task<IActionResult> AddUserGet()
     {
+        var userEmailAddress = HttpContext.User.GetEmailAddress();
+        var userData = await userService.GetUserByEmailAsync(userEmailAddress);
+
+        if (userData.Role != UserRole.ServiceManager)
+        {
+            return RedirectToAction("Index");
+        }
+        
         var addUserViewModel = new AddUserViewModel();
         
         return View("AddUser", addUserViewModel);
@@ -145,6 +185,14 @@ public class HomeController : Controller
     [HttpGet("/user-disable/{id}/")]
     public async Task<IActionResult> UserEnabledGet(string id)
     {
+        var userEmailAddress = HttpContext.User.GetEmailAddress();
+        var userData = await userService.GetUserByEmailAsync(userEmailAddress);
+
+        if (userData.Role != UserRole.ServiceManager)
+        {
+            return RedirectToAction("Index");
+        }
+        
         var user = await userService.GetUserByIdAsync(int.Parse(id));
         var editUserDisabledViewModel = new EditUserEnabledViewModel(user);
         return View("EditUserEnabled", editUserDisabledViewModel);
