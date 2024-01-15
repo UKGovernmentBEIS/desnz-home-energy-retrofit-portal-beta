@@ -35,6 +35,10 @@
             })
     )
 
+    @(await Html.GovUkRadiosFor(
+            m => m.Role
+    ))
+
     @(await Html.GovUkButton(new ButtonViewModel
     {
         Text = "Submit",

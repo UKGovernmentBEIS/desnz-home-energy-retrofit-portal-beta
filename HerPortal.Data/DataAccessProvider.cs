@@ -169,4 +169,13 @@ public class DataAccessProvider : IDataAccessProvider
 
         await context.SaveChangesAsync();
     }
+
+    public async Task SetUserRoleByIdAsync(int userId, UserRole role)
+    {
+        var user = await GetUserByIdAsync(userId);
+
+        user.Role = role;
+
+        await context.SaveChangesAsync();
+    }
 }

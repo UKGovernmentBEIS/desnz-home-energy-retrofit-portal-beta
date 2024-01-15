@@ -199,9 +199,10 @@ public class HomeController : Controller
     }
 
     [HttpPost("/user-disable/{id}/")]
-    public async Task<IActionResult> UserEnabledPost([FromForm] bool enabled, string id)
+    public async Task<IActionResult> UserEnabledPost([FromForm] bool enabled, [FromForm] UserRole role, string id)
     {
         await userService.SetUserEnabledByIdAsync(int.Parse(id), enabled);
+        await userService.SetUserRoleByIdAsync(int.Parse(id), role);
         
         return RedirectToAction("Users");
     }

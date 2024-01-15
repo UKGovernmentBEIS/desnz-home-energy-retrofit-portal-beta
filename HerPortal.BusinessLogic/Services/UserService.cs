@@ -1,4 +1,5 @@
 ﻿using HerPortal.BusinessLogic.Models;
+using HerPortal.BusinessLogic.Models.Enums;
 
 namespace HerPortal.BusinessLogic.Services;
 
@@ -48,5 +49,10 @@ public class UserService
     public async Task SetUserEnabledByIdAsync(int userId, bool enabled)
     {
         await dataAccessProvider.SetUserEnabledByIdAsync(userId, enabled);
+    }
+
+    public async Task SetUserRoleByIdAsync(int userId, UserRole role)
+    {
+        await dataAccessProvider.SetUserRoleByIdAsync(userId, role);
     }
 }
