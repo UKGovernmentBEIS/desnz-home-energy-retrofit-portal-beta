@@ -5,7 +5,7 @@ using HerPortal.BusinessLogic.Models;
 
 namespace HerPortal.Models;
 
-public class EditUserViewModel
+public class EditUserLasViewModel
 {
     public string? Email { get; set; }
     public List<string> SelectedLocalAuthorityIds { get; set; }
@@ -14,7 +14,7 @@ public class EditUserViewModel
     
     public Dictionary<string, LabelViewModel> LocalAuthorityCheckboxLabels { get; }
 
-    public EditUserViewModel(User user, IReadOnlyCollection<LocalAuthority> allLocalAuthorities)
+    public EditUserLasViewModel(User user, IReadOnlyCollection<LocalAuthority> allLocalAuthorities)
     {
         Email = user.EmailAddress;
         SelectedLocalAuthorityIds = user.LocalAuthorities.Select(la => la.Id.ToString()).ToList();
@@ -30,7 +30,7 @@ public class EditUserViewModel
         );
     }
 
-    public EditUserViewModel()
+    public EditUserLasViewModel()
     {
         
     }

@@ -1,4 +1,4 @@
-﻿@model HerPortal.Models.EditUserViewModel
+﻿@model HerPortal.Models.EditUserLasViewModel
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using HerPortal.Controllers
 @using GovUkDesignSystem
@@ -24,7 +24,7 @@
     </nav>
 }
 
-<form action="@Url.Action(nameof(HomeController.LocalAuthorityPost), "Home")" method="post" novalidate>
+<form action="@Url.Action(nameof(HomeController.UserLaPost), "Home")" method="post" novalidate>
     @Html.AntiForgeryToken()
 
     @(await Html.GovUkCheckboxesFromStringsFor(

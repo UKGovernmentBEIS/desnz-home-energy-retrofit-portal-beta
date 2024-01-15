@@ -159,4 +159,13 @@ public class DataAccessProvider : IDataAccessProvider
 
         await context.SaveChangesAsync();
     }
+
+    public async Task SetUserDisabledByIdAsync(int userId, bool disabled)
+    {
+        var user = await GetUserByIdAsync(userId);
+
+        user.Disabled = disabled;
+
+        await context.SaveChangesAsync();
+    }
 }

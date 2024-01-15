@@ -1,0 +1,43 @@
+﻿@model HerPortal.Models.EditUserDisabledViewModel
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using HerPortal.Controllers
+@using GovUkDesignSystem
+@using GovUkDesignSystem.GovUkDesignSystemComponents
+@{
+    ViewBag.Title = "Admin - Home Energy Retrofit Portal BETA";   
+}
+
+
+@section BeforeMain {
+    <nav class="app-primary-navigation" aria-label="primary">
+        <ul class="app-primary-navigation__list">
+            <li class="app-primary-navigation__item">
+                <a asp-action="Index" class="app-primary-navigation__link">Local Authorities</a>
+            </li>
+            <li class="app-primary-navigation__item app-primary-navigation__item--current">
+                <a asp-action="Users" class="app-primary-navigation__link" aria-current="page">Users</a>
+            </li>
+            <li class="app-primary-navigation__item">
+                <a asp-action="ExportAll" class="app-primary-navigation__link">Export All</a>
+            </li>
+        </ul>
+    </nav>
+}
+
+<form action="@Url.Action(nameof(HomeController.UserDisablePost), "Home")" method="post" novalidate>
+    @Html.AntiForgeryToken()
+
+    @(await Html.GovUkCheckboxFromBoolFor(
+            m => m.Disabled,
+            label: new LabelViewModel()
+            {
+                Text = "Disable"
+            })
+    )
+
+    @(await Html.GovUkButton(new ButtonViewModel
+    {
+        Text = "Submit",
+    }))
+</form>
+

@@ -54,7 +54,10 @@
                 },
                 new()
                 {
-                    Html = @<a href="@Url.Action(nameof(HomeController.UserGet), "Home", new RouteValueDictionary(new { id = user.Id }))">Assign LAs</a>
+                    Html = @<div>
+                               <a href="@Url.Action(nameof(HomeController.UserLaGet), "Home", new RouteValueDictionary(new { id = user.Id }))">Assign LAs</a>
+                               <a href="@Url.Action(nameof(HomeController.UserDisableGet), "Home", new RouteValueDictionary(new { id = user.Id }))">Disable</a>
+                           </div>
                 },
             }
         

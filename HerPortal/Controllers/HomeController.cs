@@ -105,21 +105,21 @@ public class HomeController : Controller
         return RedirectToAction("Index");
     }
 
-    [HttpGet("/user/{id}/")]
-    public async Task<IActionResult> UserGet(string id)
+    [HttpGet("/user-la/{id}/")]
+    public async Task<IActionResult> UserLaGet(string id)
     {
         var user = await userService.GetUserByIdAsync(int.Parse(id));
         var localAuthorities = await localAuthorityService.GetAllLocalAuthoritiesAsync();
-        var editUserViewModel = new EditUserViewModel(user, localAuthorities.ToList());
-        return View("EditUser", editUserViewModel);
+        var editUserLasViewModel = new EditUserLasViewModel(user, localAuthorities.ToList());
+        return View("EditUserLas", editUserLasViewModel);
     }
 
-    [HttpPost("/user/{id}/")]
-    public async Task<IActionResult> UserPost(EditUserViewModel editUserViewModel, string id)
+    [HttpPost("/user-la/{id}/")]
+    public async Task<IActionResult> UserLaPost(EditUserLasViewModel editUserLasViewModel, string id)
     {
         // the checkboxes send an additional dummy value, must filter it out
         var selectedLocalAuthorityIds =
-            editUserViewModel.SelectedLocalAuthorityIds
+            editUserLasViewModel.SelectedLocalAuthorityIds
                 .Where(localAuthorityId => int.TryParse(localAuthorityId, out _))
                 .Select(int.Parse);
 
@@ -140,6 +140,22 @@ public class HomeController : Controller
     public async Task<IActionResult> AddUserPost(AddUserViewModel addUserViewModel)
     {
         await userService.AddUserByEmailAsync(addUserViewModel.Email);
+        
+        return RedirectToAction("Users");
+    }
+
+    [HttpGet("/user-disable/{id}/")]
+    public async Task<IActionResult> UserDisableGet(string id)
+    {
+        var user = await userService.GetUserByIdAsync(int.Parse(id));
+        var editUserDisabledViewModel = new EditUserDisabledViewModel(user);
+        return View("EditUserDisabled", editUserDisabledViewModel);
+    }
+
+    [HttpPost("/user-disable/{id}/")]
+    public async Task<IActionResult> UserDisablePost([FromForm] bool disabled, string id)
+    {
+        await userService.SetUserDisabledByIdAsync(int.Parse(id), disabled);
         
         return RedirectToAction("Users");
     }
