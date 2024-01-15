@@ -41,18 +41,16 @@ public class HomeController : Controller
             await userService.MarkUserAsHavingLoggedInAsync(userData.Id);
         }
 
-        var permission = "admin";
-
-        switch (permission)
+        switch (userData.Role)
         {
-            case "admin":
+            case UserRole.ServiceManager:
                 var localAuthorities = await localAuthorityService.GetAllLocalAuthoritiesAsync();
                 
                 var localAuthoritiesViewModel = new LocalAuthoritiesViewModel(localAuthorities.ToList());
                 
                 return View("LocalAuthorities", localAuthoritiesViewModel);
-            default:
-
+            
+            case UserRole.LocalAuthorityStaff: default:
                 var csvFilePage = await csvFileService.GetPaginatedFileDataForUserAsync(userEmailAddress, custodianCodes, page, PageSize);
 
                 string GetPageLink(int pageNumber) => Url.Action(nameof(Index), "Home", new RouteValueDictionary() { { "custodianCodes", custodianCodes }, { "page", pageNumber } });
