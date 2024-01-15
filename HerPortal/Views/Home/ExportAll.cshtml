@@ -22,4 +22,4 @@
     </nav>
 }
 
-@(await Html.GovUkButton(new ButtonViewModel { Text = "Export All" }))
+<a asp-controller="CsvFile" asp-action="ExportAllCsvFile">@(await Html.GovUkButton(new ButtonViewModel { Text = "Export All" }))</a>

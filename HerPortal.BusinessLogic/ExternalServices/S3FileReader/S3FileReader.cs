@@ -97,4 +97,37 @@ public class S3FileReader : IS3FileReader
             throw;
         }
     }
+
+    public async Task<IEnumerable<S3Object>> GetAllS3ObjectsAsync()
+    {
+        try
+        {
+            var request = new ListObjectsV2Request
+            {
+                BucketName = config.BucketName,
+            };
+            var files = await s3Client.ListObjectsV2Async(request);
+            return files.S3Objects.Where(s3O => keyService.IsValidS3Key(s3O.Key));
+        }
+        catch (AmazonS3Exception ex)
+        { 
+            logger.LogError
+            (
+                "AWS S3 error when listing CSV files from bucket: \"{BucketName}\", Message: \"{Message}\"",
+                config.BucketName,
+                ex.Message
+            );
+            throw;
+        }
+        catch (Exception ex)
+        {
+            logger.LogError
+            (
+                "Error when listing CSV files from bucket: \"{BucketName}\", Message: \"{Message}\"",
+                config.BucketName,
+                ex.Message
+            );
+            throw;
+        }
+    }
 }

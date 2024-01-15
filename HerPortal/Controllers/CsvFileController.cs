@@ -57,4 +57,37 @@ public class CsvFileController : Controller
 
         return File(file, "text/csv", $"{custodianCode}_{year}-{month:D2}.csv");
     }
+    
+    [HttpGet("all")]
+    public async Task<IActionResult> ExportAllCsvFile()
+    {
+        Stream file;
+        try
+        {
+            var referralRecords = await csvFileService.GetAllRecordsForUserAsync(HttpContext.User.GetEmailAddress());
+
+            file = await csvFileService.GetFileDownloadForRecordsAsync(referralRecords);
+        }
+        catch (SecurityException ex)
+        {
+            // If this is happening, someone is trying to get around the access controls or there's a bug
+            logger.LogWarning(ex.Message);
+            return Unauthorized("The logged-in user is not permitted to access this resource.");
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            return NotFound();
+        }
+        catch (Exception ex)
+        {
+            logger.LogError
+            (
+                ex,
+                "Error encountered when attempting to get CSV files."
+            );
+            return Problem($"Error encountered when attempting to get CSV files.");
+        }
+
+        return File(file, "text/csv", $"all.csv");
+    }
 }
