@@ -119,14 +119,17 @@ namespace HerPortal.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Enabled")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("EmailAddress")
                         .HasColumnType("text");
 
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("boolean");
+
                     b.Property<bool>("HasLoggedIn")
                         .HasColumnType("boolean");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
 
                     b.Property<uint>("xmin")
                         .IsConcurrencyToken()

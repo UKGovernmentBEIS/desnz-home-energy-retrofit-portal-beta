@@ -1,4 +1,6 @@
-﻿namespace HerPortal.BusinessLogic.Models;
+﻿using HerPortal.BusinessLogic.Models.Enums;
+
+namespace HerPortal.BusinessLogic.Models;
 
 public class User
 {
@@ -7,6 +9,8 @@ public class User
     public bool HasLoggedIn { get; set; }
     
     public bool Enabled { get; set; }
+    
+    public UserRole Role { get; set; }
     
     public List<LocalAuthority> LocalAuthorities { get; set; }
 }
