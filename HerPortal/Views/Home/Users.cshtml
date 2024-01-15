@@ -41,6 +41,10 @@
             },
             new()
             {
+                Text = "State"
+            },
+            new()
+            {
                 Text = "Actions"
             }
         },
@@ -51,6 +55,14 @@
                 new()
                 {
                     Text = user.EmailAddress
+                },
+                new()
+                {
+                    Html = @<text>@await Html.GovUkTag(user.Enabled switch
+                                  {
+                                      true => new TagViewModel { Classes = "govuk-tag--green", Text = "Enabled" },
+                                      false => new TagViewModel { Classes = "govuk-tag--red", Text = "Disabled" }
+                                  })</text>
                 },
                 new()
                 {
