@@ -3,6 +3,7 @@
 @using GovUkDesignSystem.GovUkDesignSystemComponents
 @using HerPortal.BusinessLogic.Models.Enums
 @using HerPortal.Controllers
+@using HerPortal.Models
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Microsoft.AspNetCore.Routing
 @{
@@ -26,47 +27,58 @@
     </nav>
 }
 
-<div class="horizontally-scrollable">
-    @await Html.GovUkTable(new TableGovUkViewModel
-        {
-            Head = new List<TableCellViewModel>
-            {
-                new()
+<div class="govuk-grid-row">
+    <aside class="govuk-grid-column-one-third">
+        @await Html.PartialAsync("Components/_MultiRegionFilter", new MultiRegionFilterViewModel(Model.LocalAuthorities))
+    </aside>
+    <div class="govuk-grid-column-two-thirds">
+        <div class="horizontally-scrollable">
+            @await Html.GovUkTable(new TableGovUkViewModel
                 {
-                    Text = "Name"
-                },
-                new()
-                {
-                    Text = "State"
-                },
-                new()
-                {
-                    Text = "Actions"
+                    Head = new List<TableCellViewModel>
+                    {
+                        new()
+                        {
+                            Text = "Name"
+                        },
+                        new()
+                        {
+                            Text = "Status"
+                        },
+                        new()
+                        {
+                            Text = "Actions"
+                        }
+                    },
+                    Rows = Model.LocalAuthorities.Select(la => new TableRowViewModel
+                    {
+                        Row = new List<TableCellViewModel>
+                        {
+                            new()
+                            {
+                                Text = la.Name
+                            },
+                            new()
+                            {
+                                Html = @<text>@await Html.GovUkTag(la.Status switch
+                                              {
+                                                  LocalAuthorityStatus.Live => new TagViewModel { Classes = "govuk-tag--green", Text = "Live" },
+                                                  LocalAuthorityStatus.Pending => new TagViewModel { Classes = "govuk-tag--yellow", Text = "Pending" },
+                                                  _ => new TagViewModel { Classes = "govuk-tag--red", Text = "Not Taking Part" },
+                                              })</text>
+                            },
+                            new()
+                            {
+                                Html = @<div>
+                                    <a href="@Url.Action(nameof(HomeController.LocalAuthorityGet), "Home", new RouteValueDictionary(new { id = la.Id }))">Status</a>
+                                    <a href="@Url.Action(nameof(HomeController.LocalAuthorityGet), "Home", new RouteValueDictionary(new { id = la.Id }))">Users</a>
+                                </div>
+                            },
+                        }
+                    }).ToList()
                 }
-            },
-            Rows = Model.LocalAuthorities.Select(la => new TableRowViewModel
-            {
-                Row = new List<TableCellViewModel>
-                {
-                    new()
-                    {
-                        Text = la.Name
-                    },
-                    new()
-                    {
-                        Html = @<text>@await Html.GovUkTag(la.Status switch
-                                      {
-                                          LocalAuthorityStatus.Live => new TagViewModel { Classes = "govuk-tag--green", Text = "Live" },
-                                          LocalAuthorityStatus.Pending => new TagViewModel { Classes = "govuk-tag--yellow", Text = "Pending" },
-                                          _ => new TagViewModel { Classes = "govuk-tag--red", Text = "Not Taking Part" },
-                                      })</text>
-                    },
-                    new()
-                    {
-                        Html = @<a href="@Url.Action(nameof(HomeController.LocalAuthorityGet), "Home", new RouteValueDictionary(new { id = la.Id }))">Edit</a>
-                    },
-                }
-            }).ToList()
-        }
-    )
+            )
+        </div>
+
+    </div>
 </div>
