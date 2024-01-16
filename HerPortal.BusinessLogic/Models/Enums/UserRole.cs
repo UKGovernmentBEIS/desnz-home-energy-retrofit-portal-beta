@@ -2,6 +2,6 @@
 
 public enum UserRole
 {
-    ServiceManager,
+    DesnzStaff,
     LocalAuthorityStaff
 }

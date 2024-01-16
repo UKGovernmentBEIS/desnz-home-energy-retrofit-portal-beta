@@ -43,7 +43,7 @@ public class HomeController : Controller
 
         switch (userData.Role)
         {
-            case UserRole.ServiceManager:
+            case UserRole.DesnzStaff:
                 var localAuthorities = await localAuthorityService.GetAllLocalAuthoritiesAsync();
                 
                 var localAuthoritiesViewModel = new LocalAuthoritiesViewModel(localAuthorities.ToList());
@@ -79,7 +79,7 @@ public class HomeController : Controller
         var userEmailAddress = HttpContext.User.GetEmailAddress();
         var userData = await userService.GetUserByEmailAsync(userEmailAddress);
 
-        if (userData.Role != UserRole.ServiceManager)
+        if (userData.Role != UserRole.DesnzStaff)
         {
             return RedirectToAction("Index");
         }
@@ -95,7 +95,7 @@ public class HomeController : Controller
         var userEmailAddress = HttpContext.User.GetEmailAddress();
         var userData = await userService.GetUserByEmailAsync(userEmailAddress);
 
-        if (userData.Role != UserRole.ServiceManager)
+        if (userData.Role != UserRole.DesnzStaff)
         {
             return RedirectToAction("Index");
         }
@@ -110,7 +110,7 @@ public class HomeController : Controller
         var userEmailAddress = HttpContext.User.GetEmailAddress();
         var userData = await userService.GetUserByEmailAsync(userEmailAddress);
 
-        if (userData.Role != UserRole.ServiceManager)
+        if (userData.Role != UserRole.DesnzStaff)
         {
             return RedirectToAction("Index");
         }
@@ -133,7 +133,7 @@ public class HomeController : Controller
         var userEmailAddress = HttpContext.User.GetEmailAddress();
         var userData = await userService.GetUserByEmailAsync(userEmailAddress);
 
-        if (userData.Role != UserRole.ServiceManager)
+        if (userData.Role != UserRole.DesnzStaff)
         {
             return RedirectToAction("Index");
         }
@@ -164,7 +164,7 @@ public class HomeController : Controller
         var userEmailAddress = HttpContext.User.GetEmailAddress();
         var userData = await userService.GetUserByEmailAsync(userEmailAddress);
 
-        if (userData.Role != UserRole.ServiceManager)
+        if (userData.Role != UserRole.DesnzStaff)
         {
             return RedirectToAction("Index");
         }
@@ -188,7 +188,7 @@ public class HomeController : Controller
         var userEmailAddress = HttpContext.User.GetEmailAddress();
         var userData = await userService.GetUserByEmailAsync(userEmailAddress);
 
-        if (userData.Role != UserRole.ServiceManager)
+        if (userData.Role != UserRole.DesnzStaff)
         {
             return RedirectToAction("Index");
         }

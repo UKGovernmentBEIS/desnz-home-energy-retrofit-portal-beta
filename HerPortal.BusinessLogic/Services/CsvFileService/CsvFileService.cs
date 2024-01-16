@@ -140,7 +140,7 @@ public class CsvFileService : ICsvFileService
         // Important! First ensure the logged-in user is allowed to access this data
         var userData = await dataAccessProvider.GetUserByEmailAsync(userEmailAddress);
         
-        if (userData.Role != UserRole.ServiceManager)
+        if (userData.Role != UserRole.DesnzStaff)
         {
             // We don't want to log the User's email address for GDPR reasons, but the ID is fine.
             throw new SecurityException(
