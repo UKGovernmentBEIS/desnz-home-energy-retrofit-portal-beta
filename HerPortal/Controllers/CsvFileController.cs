@@ -27,6 +27,7 @@ public class CsvFileController : Controller
     }
     
     [HttpGet("{custodianCode}/{year:int}/{month:int}")]
+    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
     public async Task<IActionResult> GetCsvFile(string custodianCode, int year, int month)
     {
         Stream file;
@@ -61,6 +62,7 @@ public class CsvFileController : Controller
     }
     
     [HttpGet("all")]
+    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
     public async Task<IActionResult> ExportAllCsvFile([FromQuery] DataExportType dataExportType)
     {
         Stream file;

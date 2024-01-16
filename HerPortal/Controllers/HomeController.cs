@@ -74,53 +74,33 @@ public class HomeController : Controller
     }
 
     [HttpGet("/users")]
+    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
     public async Task<IActionResult> Users()
     {
-        var userEmailAddress = HttpContext.User.GetEmailAddress();
-        var userData = await userService.GetUserByEmailAsync(userEmailAddress);
-
-        if (userData.Role != UserRole.DesnzStaff)
-        {
-            return RedirectToAction("Index");
-        }
-        
         var users = await userService.GetAllUsersAsync();
         var usersViewModel = new UsersViewModel(users.ToList());
         return View("Users", usersViewModel);
     }
 
     [HttpGet("/export-all")]
-    public async Task<IActionResult> ExportAll()
+    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
+    public IActionResult ExportAll()
     {
-        var userEmailAddress = HttpContext.User.GetEmailAddress();
-        var userData = await userService.GetUserByEmailAsync(userEmailAddress);
-
-        if (userData.Role != UserRole.DesnzStaff)
-        {
-            return RedirectToAction("Index");
-        }
-        
         var exportAllViewModel = new ExportAllViewModel();
         return View("ExportAll", exportAllViewModel);
     }
 
     [HttpGet("/local-authority/{id}/")]
+    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
     public async Task<IActionResult> LocalAuthorityGet(string id)
     {
-        var userEmailAddress = HttpContext.User.GetEmailAddress();
-        var userData = await userService.GetUserByEmailAsync(userEmailAddress);
-
-        if (userData.Role != UserRole.DesnzStaff)
-        {
-            return RedirectToAction("Index");
-        }
-        
         var localAuthority = await localAuthorityService.GetLocalAuthorityByIdAsync(int.Parse(id));
         var editLocalAuthorityViewModel = new EditLocalAuthorityViewModel(localAuthority);
         return View("EditLocalAuthority", editLocalAuthorityViewModel);
     }
 
     [HttpPost("/local-authority/{id}/")]
+    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
     public async Task<IActionResult> LocalAuthorityPost(EditLocalAuthorityViewModel editLocalAuthorityViewModel, string id)
     {
         await localAuthorityService.SetLocalAuthorityStatusById(int.Parse(id), editLocalAuthorityViewModel.Status ?? LocalAuthorityStatus.NotTakingPart);
@@ -128,16 +108,9 @@ public class HomeController : Controller
     }
 
     [HttpGet("/user-la/{id}/")]
+    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
     public async Task<IActionResult> UserLaGet(string id)
     {
-        var userEmailAddress = HttpContext.User.GetEmailAddress();
-        var userData = await userService.GetUserByEmailAsync(userEmailAddress);
-
-        if (userData.Role != UserRole.DesnzStaff)
-        {
-            return RedirectToAction("Index");
-        }
-        
         var user = await userService.GetUserByIdAsync(int.Parse(id));
         var localAuthorities = await localAuthorityService.GetAllLocalAuthoritiesAsync();
         var editUserLasViewModel = new EditUserLasViewModel(user, localAuthorities.ToList());
@@ -145,6 +118,7 @@ public class HomeController : Controller
     }
 
     [HttpPost("/user-la/{id}/")]
+    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
     public async Task<IActionResult> UserLaPost(EditUserLasViewModel editUserLasViewModel, string id)
     {
         // the checkboxes send an additional dummy value, must filter it out
@@ -159,22 +133,16 @@ public class HomeController : Controller
     }
 
     [HttpGet("/adduser")]
-    public async Task<IActionResult> AddUserGet()
+    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
+    public IActionResult AddUserGet()
     {
-        var userEmailAddress = HttpContext.User.GetEmailAddress();
-        var userData = await userService.GetUserByEmailAsync(userEmailAddress);
-
-        if (userData.Role != UserRole.DesnzStaff)
-        {
-            return RedirectToAction("Index");
-        }
-        
         var addUserViewModel = new AddUserViewModel();
         
         return View("AddUser", addUserViewModel);
     }
 
     [HttpPost("/adduser")]
+    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
     public async Task<IActionResult> AddUserPost(AddUserViewModel addUserViewModel)
     {
         await userService.AddUserByEmailAsync(addUserViewModel.Email);
@@ -183,22 +151,16 @@ public class HomeController : Controller
     }
 
     [HttpGet("/user-disable/{id}/")]
+    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
     public async Task<IActionResult> UserEnabledGet(string id)
     {
-        var userEmailAddress = HttpContext.User.GetEmailAddress();
-        var userData = await userService.GetUserByEmailAsync(userEmailAddress);
-
-        if (userData.Role != UserRole.DesnzStaff)
-        {
-            return RedirectToAction("Index");
-        }
-        
         var user = await userService.GetUserByIdAsync(int.Parse(id));
         var editUserDisabledViewModel = new EditUserEnabledViewModel(user);
         return View("EditUserEnabled", editUserDisabledViewModel);
     }
 
     [HttpPost("/user-disable/{id}/")]
+    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
     public async Task<IActionResult> UserEnabledPost([FromForm] bool enabled, [FromForm] UserRole role, string id)
     {
         await userService.SetUserEnabledByIdAsync(int.Parse(id), enabled);
