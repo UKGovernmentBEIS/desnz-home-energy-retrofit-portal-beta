@@ -68,9 +68,10 @@ public class DataAccessProvider : IDataAccessProvider
         await context.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<User>> GetAllUsersAsync()
+    public async Task<IEnumerable<User>> GetUsersByLocalAuthorityAsync(int id)
     {
         return await context.Users
+            .Where(user => user.LocalAuthorities.Any(la => la.Id == id))
             .ToListAsync();
     }
 

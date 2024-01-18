@@ -26,9 +26,9 @@ public class UserService
         return user;
     }
 
-    public async Task<IEnumerable<User>> GetAllUsersAsync()
+    public async Task<IEnumerable<User>> GetUsersByLocalAuthorityAsync(int id)
     {
-        return await dataAccessProvider.GetAllUsersAsync();
+        return await dataAccessProvider.GetUsersByLocalAuthorityAsync(id);
     }
 
     public async Task AddUserByEmailAsync(string emailAddress)

@@ -81,11 +81,11 @@ public class HomeController : Controller
         return View("SupportingDocuments");
     }
 
-    [HttpGet("/users")]
+    [HttpGet("/local-authority/{id}/users")]
     [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
-    public async Task<IActionResult> Users()
+    public async Task<IActionResult> Users(string id)
     {
-        var users = await userService.GetAllUsersAsync();
+        var users = await userService.GetUsersByLocalAuthorityAsync(int.Parse(id));
         var usersViewModel = new UsersViewModel(users.ToList());
         return View("Users", usersViewModel);
     }
