@@ -58,7 +58,7 @@ public class UserService
             // throws if not found
             return await GetUserByEmailAsync(emailAddress);
         }
-        catch (InvalidOperationException invalidOperationException)
+        catch (InvalidOperationException)
         {
             await AddUserByEmailAsync(emailAddress);
             return await GetUserByEmailAsync(emailAddress);
