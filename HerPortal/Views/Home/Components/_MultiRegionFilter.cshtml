@@ -4,6 +4,10 @@
 @model HerPortal.Models.MultiRegionFilterViewModel
 
 <form method="get">
+    @if (Model.FilterChar is not null)
+    {
+        @Html.HiddenFor(m => m.FilterChar)
+    }
     @(await Html.GovUkCheckboxesFromStringsFor(
             model => model.CustodianCodes,
             checkboxOptions: Model.LocalAuthorityCheckboxLabels,

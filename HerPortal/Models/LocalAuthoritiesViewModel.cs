@@ -11,8 +11,11 @@ public class LocalAuthoritiesViewModel
 {
     public List<LocalAuthority> LocalAuthorities { get; }
     
-    public LocalAuthoritiesViewModel(List<LocalAuthority> localAuthorities)
+    public char? FilterChar { get; }
+    
+    public LocalAuthoritiesViewModel(List<LocalAuthority> localAuthorities, char? filterChar)
     {
         LocalAuthorities = localAuthorities;
+        FilterChar = filterChar;
     }
 }

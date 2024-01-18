@@ -12,7 +12,9 @@ public class MultiRegionFilterViewModel
     public List<string> CustodianCodes { get; }
     public Dictionary<string, LabelViewModel> LocalAuthorityCheckboxLabels { get; }
 
-    public MultiRegionFilterViewModel(IReadOnlyCollection<LocalAuthority> localAuthorities)
+    public char? FilterChar { get; }
+
+    public MultiRegionFilterViewModel(IReadOnlyCollection<LocalAuthority> localAuthorities, char? filterChar)
     {
         CustodianCodes = localAuthorities.Select(la => la.CustodianCode).ToList();
         LocalAuthorityCheckboxLabels = new Dictionary<string, LabelViewModel>(localAuthorities
@@ -27,5 +29,6 @@ public class MultiRegionFilterViewModel
             )
             .OrderBy(kvp => kvp.Value.Text)
         );
+        FilterChar = filterChar;
     }
 }

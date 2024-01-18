@@ -32,7 +32,7 @@
 {
     <div class="govuk-grid-row">
         <aside class="govuk-grid-column-one-third">
-            @await Html.PartialAsync("Components/_MultiRegionFilter", new MultiRegionFilterViewModel(Model.LocalAuthorities))
+            @await Html.PartialAsync("Components/_MultiRegionFilter", new MultiRegionFilterViewModel(Model.LocalAuthorities, null))
         </aside>
         <div class="govuk-grid-column-two-thirds">
             @await Html.PartialAsync("Components/_ReferralFilesSection", Model)

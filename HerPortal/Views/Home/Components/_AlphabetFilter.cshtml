@@ -8,7 +8,7 @@
       <ul class="alphabet">
         @foreach (var c in alphabet)
         {
-          <li><a asp-action="Index" class="govuk-body govuk-link--no-visited-state">@c</a></li>
+          <li><a asp-action="Index" asp-controller="Home" asp-route-FilterChar="@c" class="govuk-body govuk-link--no-visited-state">@c</a></li>
         }
       </ul>
     </div>
