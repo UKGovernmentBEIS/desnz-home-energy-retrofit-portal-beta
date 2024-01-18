@@ -18,6 +18,4 @@ public interface IDataAccessProvider
     public Task SetLocalAuthorityStatusById(int id, LocalAuthorityStatus status);
     public Task AddUserToLocalAuthorityByIdAsync(int userId, int localAuthorityId);
     public Task RemoveUserFromLocalAuthorityByIdAsync(int userId, int localAuthorityId);
-    public Task SetUserEnabledByIdAsync(int userId, bool enabled);
-    public Task SetUserRoleByIdAsync(int userId, UserRole role);
 }

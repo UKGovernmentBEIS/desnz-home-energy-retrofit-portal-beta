@@ -171,22 +171,4 @@ public class DataAccessProvider : IDataAccessProvider
 
         await context.SaveChangesAsync();
     }
-
-    public async Task SetUserEnabledByIdAsync(int userId, bool enabled)
-    {
-        var user = await GetUserByIdAsync(userId);
-
-        user.Enabled = enabled;
-
-        await context.SaveChangesAsync();
-    }
-
-    public async Task SetUserRoleByIdAsync(int userId, UserRole role)
-    {
-        var user = await GetUserByIdAsync(userId);
-
-        user.Role = role;
-
-        await context.SaveChangesAsync();
-    }
 }
