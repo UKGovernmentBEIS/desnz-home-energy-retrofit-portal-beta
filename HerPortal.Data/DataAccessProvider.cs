@@ -162,6 +162,16 @@ public class DataAccessProvider : IDataAccessProvider
         await context.SaveChangesAsync();
     }
 
+    public async Task RemoveUserFromLocalAuthorityByIdAsync(int userId, int localAuthorityId)
+    {
+        var user = await GetUserByIdAsync(userId);
+        var localAuthority = await GetLocalAuthorityByIdAsync(localAuthorityId);
+
+        user.LocalAuthorities.Remove(localAuthority);
+
+        await context.SaveChangesAsync();
+    }
+
     public async Task SetUserEnabledByIdAsync(int userId, bool enabled)
     {
         var user = await GetUserByIdAsync(userId);

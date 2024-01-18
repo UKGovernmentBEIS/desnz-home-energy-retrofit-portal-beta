@@ -41,6 +41,11 @@ public class UserService
         await dataAccessProvider.MarkUserAsHavingLoggedInAsync(userId);
     }
 
+    public async Task RemoveUserFromLocalAuthorityByIdAsync(int userId, int localAuthorityId)
+    {
+        await dataAccessProvider.RemoveUserFromLocalAuthorityByIdAsync(userId, localAuthorityId);
+    }
+
     public async Task AddUserToLocalAuthorityByIdAsync(int userId, int localAuthorityId)
     {
         await dataAccessProvider.AddUserToLocalAuthorityByIdAsync(userId, localAuthorityId);

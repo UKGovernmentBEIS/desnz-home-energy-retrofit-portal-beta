@@ -12,11 +12,11 @@ public class LocalAuthorityUsersViewModel
     public List<User> Users { get; }
     public string Name;
     public string Email;
-    public string LocalAuthorityName;
+    public LocalAuthority LocalAuthority;
     
     public LocalAuthorityUsersViewModel(List<User> users, LocalAuthority localAuthority)
     {
         Users = users;
-        LocalAuthorityName = localAuthority.Name;
+        LocalAuthority = localAuthority;
     }
 }

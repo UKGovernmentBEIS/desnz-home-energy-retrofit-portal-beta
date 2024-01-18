@@ -5,6 +5,7 @@
 @using HerPortal.Controllers
 @using HerPortal.Models.Components
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Routing
 @{
     ViewBag.Title = "Admin - Home Energy Retrofit Portal BETA";   
 }
@@ -14,7 +15,7 @@
     @await Html.PartialAsync("Components/_Tabs", new NavTabsViewModel(NavTabsViewModel.Tab.LocalAuthorities, UserRole.DesnzStaff))
 }
 
-<h1 class="govuk-heading-l">@Model.LocalAuthorityName Users</h1>
+<h1 class="govuk-heading-l">@Model.LocalAuthority.Name Users</h1>
 
 <div class="horizontally-scrollable">
     @(await Html.GovUkTable(new TableGovUkViewModel
@@ -52,9 +53,13 @@
                     },
                     new()
                     {
-                        Html = @<div>
-                            <a href="@Url.Action(nameof(HomeController.Index), "Home")">Remove from LA</a>
-                        </div>
+                        Html = @<a
+                                    asp-action="LocalAuthorityUserDeleteGet"
+                                    asp-controller="Home"
+                                    asp-route-localAuthorityId="@Model.LocalAuthority.Id"
+                                    asp-route-userId="@user.Id">
+                                   Remove from LA
+                               </a>
                     },
                 }
         

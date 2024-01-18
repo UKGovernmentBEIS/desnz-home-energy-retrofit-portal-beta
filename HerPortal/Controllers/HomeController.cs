@@ -126,4 +126,21 @@ public class HomeController : Controller
         await userService.AddUserToLocalAuthorityByIdAsync(user.Id, int.Parse(id));
         return RedirectToAction(nameof(LocalAuthorityUsersGet), new RouteValueDictionary(new { id }));
     }
+
+    [HttpGet("/local-authority/{localAuthorityId}/user/{userId}/delete")]
+    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
+    public async Task<IActionResult> LocalAuthorityUserDeleteGet(string localAuthorityId, string userId)
+    {
+        var user = await userService.GetUserByIdAsync(int.Parse(userId));
+        var localAuthorityUserDeleteViewModel = new LocalAuthorityUserDeleteViewModel(user);
+        return View("LocalAuthorityUserDelete", localAuthorityUserDeleteViewModel);
+    }
+
+    [HttpPost("/local-authority/{localAuthorityId}/user/{userId}/delete")]
+    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
+    public async Task<IActionResult> LocalAuthorityUserDeletePost(string localAuthorityId, string userId)
+    {
+        await userService.RemoveUserFromLocalAuthorityByIdAsync(int.Parse(userId), int.Parse(localAuthorityId));
+        return RedirectToAction(nameof(LocalAuthorityUsersGet), new RouteValueDictionary(new { id = localAuthorityId }));
+    }
 }

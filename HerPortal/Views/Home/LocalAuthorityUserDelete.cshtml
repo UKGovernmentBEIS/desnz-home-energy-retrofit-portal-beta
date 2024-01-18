@@ -1,0 +1,27 @@
+﻿@model HerPortal.Models.LocalAuthorityUserDeleteViewModel
+@using GovUkDesignSystem
+@using GovUkDesignSystem.GovUkDesignSystemComponents
+@using HerPortal.BusinessLogic.Models.Enums
+@using HerPortal.Controllers
+@using HerPortal.Models.Components
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewBag.Title = "Admin - Home Energy Retrofit Portal BETA";   
+}
+
+
+@section BeforeMain {
+    @await Html.PartialAsync("Components/_Tabs", new NavTabsViewModel(NavTabsViewModel.Tab.LocalAuthorities, UserRole.DesnzStaff))
+}
+
+<h1 class="govuk-heading-l">@Model.User.EmailAddress</h1>
+
+<form action="@Url.Action(nameof(HomeController.LocalAuthorityUserDeletePost), "Home")" method="post" novalidate>
+    @Html.AntiForgeryToken()
+
+    @(await Html.GovUkButton(new ButtonViewModel
+    {
+        Text = "Delete",
+    }))
+</form>
+
