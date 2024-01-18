@@ -45,8 +45,19 @@ public class HomeController : Controller
         {
             case UserRole.DesnzStaff:
                 var localAuthorities = await localAuthorityService.GetAllLocalAuthoritiesAsync();
+
+                var filteredLocalAuthorities = localAuthorities
+                    .Where(localAuthority =>
+                    {
+                        if (filterChar is { } filterCharNotNull)
+                        {
+                            return localAuthority.Name.StartsWith(filterCharNotNull);
+                        }
+                            
+                        return true;
+                    });
                 
-                var localAuthoritiesViewModel = new LocalAuthoritiesViewModel(localAuthorities.ToList(), filterChar);
+                var localAuthoritiesViewModel = new LocalAuthoritiesViewModel(filteredLocalAuthorities.ToList(), filterChar);
                 
                 return View("LocalAuthorities", localAuthoritiesViewModel);
             
