@@ -44,21 +44,26 @@ public class HomeController : Controller
         switch (userData.Role)
         {
             case UserRole.DesnzStaff:
-                var localAuthorities = (await localAuthorityService.GetAllLocalAuthoritiesAsync()).ToList();
-                
-                var firstCharFilteredLocalAuthorities = (filterChar.HasValue
-                    ? localAuthorities.Where(la => la.Name.StartsWith(filterChar.Value))
-                    : localAuthorities).ToList();
-
-                var selectedLocalAuthorities = (custodianCodes.Count > 0
-                    ? firstCharFilteredLocalAuthorities
-                        .Where(localAuthority => custodianCodes.Contains(localAuthority.CustodianCode))
-                    : firstCharFilteredLocalAuthorities).ToList();
-                
-                var localAuthoritiesViewModel = new LocalAuthoritiesViewModel(selectedLocalAuthorities, firstCharFilteredLocalAuthorities, localAuthorities, filterChar);
-                
-                return View("LocalAuthorities", localAuthoritiesViewModel);
+                return RedirectToAction(nameof(LocalAuthorities));
             
+            case UserRole.LocalAuthorityStaff: default:
+                return RedirectToAction(nameof(ReferralFiles));
+        }
+        
+    }
+
+    [HttpGet("/referral-files")]
+    public async Task<IActionResult> ReferralFiles([FromQuery] List<string> custodianCodes, int page = 1)
+    {
+        var userEmailAddress = HttpContext.User.GetEmailAddress();
+        var user = await userService.GetUserByEmailAsync(userEmailAddress);
+
+        switch (user.Role)
+        {
+            case UserRole.DesnzStaff:
+                var exportAllViewModel = new ExportAllViewModel();
+                return View("ExportAll", exportAllViewModel);
+                
             case UserRole.LocalAuthorityStaff: default:
                 var csvFilePage = await csvFileService.GetPaginatedFileDataForUserAsync(userEmailAddress, custodianCodes, page, PageSize);
 
@@ -66,28 +71,39 @@ public class HomeController : Controller
                 
                 var homepageViewModel = new HomepageViewModel
                 (
-                    userData,
+                    user,
                     csvFilePage,
                     GetPageLink
                 );
                 
                 return View("ReferralFiles", homepageViewModel);
         }
-        
+    }
+
+    [HttpGet("/local-authorities")]
+    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
+    public async Task<IActionResult> LocalAuthorities([FromQuery] List<string> custodianCodes, [FromQuery] char? filterChar)
+    {
+        var localAuthorities = (await localAuthorityService.GetAllLocalAuthoritiesAsync()).ToList();
+                
+        var firstCharFilteredLocalAuthorities = (filterChar.HasValue
+            ? localAuthorities.Where(la => la.Name.StartsWith(filterChar.Value))
+            : localAuthorities).ToList();
+
+        var selectedLocalAuthorities = (custodianCodes.Count > 0
+            ? firstCharFilteredLocalAuthorities
+                .Where(localAuthority => custodianCodes.Contains(localAuthority.CustodianCode))
+            : firstCharFilteredLocalAuthorities).ToList();
+                
+        var localAuthoritiesViewModel = new LocalAuthoritiesViewModel(selectedLocalAuthorities, firstCharFilteredLocalAuthorities, localAuthorities, filterChar);
+                
+        return View("LocalAuthorities", localAuthoritiesViewModel);
     }
 
     [HttpGet("/supporting-documents")]
     public IActionResult SupportingDocuments()
     {
         return View("SupportingDocuments");
-    }
-
-    [HttpGet("/export-all")]
-    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
-    public IActionResult ExportAll()
-    {
-        var exportAllViewModel = new ExportAllViewModel();
-        return View("ExportAll", exportAllViewModel);
     }
 
     [HttpGet("/local-authority/{id}/status")]
