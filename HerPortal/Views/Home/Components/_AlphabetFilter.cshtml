@@ -1,40 +1,16 @@
-﻿@using GovUkDesignSystem
-@using GovUkDesignSystem.GovUkDesignSystemComponents
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model HerPortal.Models.AlphabetFilterViewModel;
 
 <div class="govuk-grid-row" style="margin-bottom: 20px">
-  <div class="govuk-grid-row">
-    <ul class="alphabet">
-      <li>A</li>
-      <li>B</li>
-      <li>C</li>
-      <li>D</li>
-      <li>E</li>
-      <li>F</li>
-      <li>G</li>
-      <li>H</li>
-      <li>I</li>
-      <li>J</li>
-      <li>K</li>
-      <li>L</li>
-      <li>M</li>
-    </ul>
-  </div>
-  <div class="govuk-grid-row">
-    <ul class="alphabet">
-      <li>N</li>
-      <li>O</li>
-      <li>P</li>
-      <li>Q</li>
-      <li>R</li>
-      <li>S</li>
-      <li>T</li>
-      <li>U</li>
-      <li>V</li>
-      <li>W</li>
-      <li>X</li>
-      <li>Y</li>
-      <li>Z</li>
-    </ul>
-  </div>
+  @foreach (var alphabet in Model.AlphabetHalves)
+  {
+    <div class="govuk-grid-row">
+      <ul class="alphabet">
+        @foreach (var c in alphabet)
+        {
+          <li><a asp-action="Index" class="govuk-body govuk-link--no-visited-state">@c</a></li>
+        }
+      </ul>
+    </div>
+  }
 </div>

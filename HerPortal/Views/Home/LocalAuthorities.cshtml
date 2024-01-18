@@ -20,7 +20,7 @@
         @await Html.PartialAsync("Components/_MultiRegionFilter", new MultiRegionFilterViewModel(Model.LocalAuthorities))
     </aside>
     <div class="govuk-grid-column-two-thirds">
-        @await Html.PartialAsync("Components/_AlphabetFilter")
+        @await Html.PartialAsync("Components/_AlphabetFilter", new AlphabetFilterViewModel())
         <div class="horizontally-scrollable">
 
             @await Html.GovUkTable(new TableGovUkViewModel
