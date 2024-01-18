@@ -152,12 +152,12 @@ public class DataAccessProvider : IDataAccessProvider
         await context.SaveChangesAsync();
     }
 
-    public async Task SetUserLocalAuthoritiesByIdAsync(int userId, List<int> localAuthorityIds)
+    public async Task AddUserToLocalAuthorityByIdAsync(int userId, int localAuthorityId)
     {
         var user = await GetUserByIdAsync(userId);
-        var localAuthorities = context.LocalAuthorities.Where(la => localAuthorityIds.Contains(la.Id));
-
-        user.LocalAuthorities = localAuthorities.ToList();
+        var localAuthority = await GetLocalAuthorityByIdAsync(localAuthorityId);
+        
+        user.LocalAuthorities.Add(localAuthority);
 
         await context.SaveChangesAsync();
     }

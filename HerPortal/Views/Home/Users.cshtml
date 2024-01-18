@@ -1,80 +1,90 @@
 ﻿@model HerPortal.Models.UsersViewModel
 @using GovUkDesignSystem
 @using GovUkDesignSystem.GovUkDesignSystemComponents
+@using HerPortal.BusinessLogic.Models.Enums
 @using HerPortal.Controllers
-@using Microsoft.AspNetCore.Routing
+@using HerPortal.Models.Components
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewBag.Title = "Admin - Home Energy Retrofit Portal BETA";   
 }
 
 
 @section BeforeMain {
-    <nav class="app-primary-navigation" aria-label="primary">
-        <ul class="app-primary-navigation__list">
-            <li class="app-primary-navigation__item">
-                <a asp-action="Index" class="app-primary-navigation__link">Local Authorities</a>
-            </li>
-            <li class="app-primary-navigation__item app-primary-navigation__item--current">
-                <a asp-action="Users" class="app-primary-navigation__link" aria-current="page">Users</a>
-            </li>
-            <li class="app-primary-navigation__item">
-                <a asp-action="ExportAll" class="app-primary-navigation__link">Export All</a>
-            </li>
-        </ul>
-    </nav>
+    @await Html.PartialAsync("Components/_Tabs", new NavTabsViewModel(NavTabsViewModel.Tab.LocalAuthorities, UserRole.DesnzStaff))
 }
 
-@await Html.GovUkButton(new ButtonViewModel
-{
-    Href = Url.Action(nameof(HomeController.AddUserGet), "Home"),
-    Text = "Add User"
-}) 
+<h1 class="govuk-heading-l">@Model.LocalAuthorityName Users</h1>
 
 <div class="horizontally-scrollable">
     @(await Html.GovUkTable(new TableGovUkViewModel
-    {
-        Head = new List<TableCellViewModel>
         {
-            new()
+            Head = new List<TableCellViewModel>
             {
-                Text = "Email"
+                new()
+                {
+                    Text = "Name"
+                },
+                new()
+                {
+                    Text = "Email"
+                },
+                new()
+                {
+                    Text = "Actions"
+                }
             },
-            new()
+            Rows = Model.Users.Select(user => new TableRowViewModel
             {
-                Text = "State"
-            },
-            new()
-            {
-                Text = "Actions"
-            }
-        },
-        Rows = Model.Users.Select(user => new TableRowViewModel
-        {
-            Row = new List<TableCellViewModel>
-            {
-                new()
+                Row = new List<TableCellViewModel>
                 {
-                    Text = user.EmailAddress
-                },
-                new()
-                {
-                    Html = @<text>@await Html.GovUkTag(user.Enabled switch
-                                  {
-                                      true => new TagViewModel { Classes = "govuk-tag--green", Text = "Enabled" },
-                                      false => new TagViewModel { Classes = "govuk-tag--red", Text = "Disabled" }
-                                  })</text>
-                },
-                new()
-                {
-                    Html = @<div>
-                               <a href="@Url.Action(nameof(HomeController.UserLaGet), "Home", new RouteValueDictionary(new { id = user.Id }))">Assign LAs</a>
-                               <a href="@Url.Action(nameof(HomeController.UserEnabledGet), "Home", new RouteValueDictionary(new { id = user.Id }))">@(user.Enabled ? "Disable" : "Enable")</a>
-                           </div>
-                },
-            }
+                    new()
+                    {
+                        Text = user.EmailAddress
+                    },
+                    new()
+                    {
+                        Html = @<text>@await Html.GovUkTag(user.Enabled switch
+                                      {
+                                          true => new TagViewModel { Classes = "govuk-tag--green", Text = "Enabled" },
+                                          false => new TagViewModel { Classes = "govuk-tag--red", Text = "Disabled" }
+                                      })</text>
+                    },
+                    new()
+                    {
+                        Html = @<div>
+                            <a href="@Url.Action(nameof(HomeController.Index), "Home")">Remove from LA</a>
+                        </div>
+                    },
+                }
         
-        }).ToList()
-    }
-))
+            }).ToList()
+        }
+    ))
 </div>
+
+<form action="@Url.Action(nameof(HomeController.UsersGet), "Home")" method="post" novalidate>
+    @Html.AntiForgeryToken()
+
+    @(await Html.GovUkTextInputFor(
+        m => m.Name,
+        labelOptions: new LabelViewModel
+        {
+            Text = "Name"
+        }
+    ))
+
+    @(await Html.GovUkTextInputFor(
+        m => m.Email,
+        labelOptions: new LabelViewModel
+        {
+            Text = "Email"
+        }
+    ))
+
+    @(await Html.GovUkButton(new ButtonViewModel
+    {
+        Text = "Submit",
+    }))
+</form>
 

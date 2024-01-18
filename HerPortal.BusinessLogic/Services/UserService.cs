@@ -41,9 +41,9 @@ public class UserService
         await dataAccessProvider.MarkUserAsHavingLoggedInAsync(userId);
     }
 
-    public async Task SetUserLocalAuthoritiesByIdAsync(int userId, List<int> localAuthorityIds)
+    public async Task AddUserToLocalAuthorityByIdAsync(int userId, int localAuthorityId)
     {
-        await dataAccessProvider.SetUserLocalAuthoritiesByIdAsync(userId, localAuthorityIds);
+        await dataAccessProvider.AddUserToLocalAuthorityByIdAsync(userId, localAuthorityId);
     }
 
     public async Task SetUserEnabledByIdAsync(int userId, bool enabled)
@@ -54,5 +54,19 @@ public class UserService
     public async Task SetUserRoleByIdAsync(int userId, UserRole role)
     {
         await dataAccessProvider.SetUserRoleByIdAsync(userId, role);
+    }
+
+    public async Task<User> GetOrCreateUserByEmail(string emailAddress)
+    {
+        try
+        {
+            // throws if not found
+            return await dataAccessProvider.GetUserByEmailAsync(emailAddress);
+        }
+        catch (InvalidOperationException invalidOperationException)
+        {
+            await dataAccessProvider.AddUserByEmailAsync(emailAddress);
+            return await dataAccessProvider.GetUserByEmailAsync(emailAddress);
+        }
     }
 }

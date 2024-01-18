@@ -16,7 +16,7 @@ public interface IDataAccessProvider
     public Task<IEnumerable<LocalAuthority>> GetAllLocalAuthoritiesAsync();
     public Task<LocalAuthority> GetLocalAuthorityByIdAsync(int id);
     public Task SetLocalAuthorityStatusById(int id, LocalAuthorityStatus status);
-    public Task SetUserLocalAuthoritiesByIdAsync(int userId, List<int> localAuthorityIds);
+    public Task AddUserToLocalAuthorityByIdAsync(int userId, int localAuthorityId);
     public Task SetUserEnabledByIdAsync(int userId, bool enabled);
     public Task SetUserRoleByIdAsync(int userId, UserRole role);
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HerPortal.BusinessLogic.Models.Enums;
@@ -81,15 +82,6 @@ public class HomeController : Controller
         return View("SupportingDocuments");
     }
 
-    [HttpGet("/local-authority/{id}/users")]
-    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
-    public async Task<IActionResult> Users(string id)
-    {
-        var users = await userService.GetUsersByLocalAuthorityAsync(int.Parse(id));
-        var usersViewModel = new UsersViewModel(users.ToList());
-        return View("Users", usersViewModel);
-    }
-
     [HttpGet("/export-all")]
     [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
     public IActionResult ExportAll()
@@ -98,7 +90,7 @@ public class HomeController : Controller
         return View("ExportAll", exportAllViewModel);
     }
 
-    [HttpGet("/local-authority/{id}/")]
+    [HttpGet("/local-authority/{id}/status")]
     [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
     public async Task<IActionResult> LocalAuthorityGet(string id)
     {
@@ -107,7 +99,7 @@ public class HomeController : Controller
         return View("EditLocalAuthority", editLocalAuthorityViewModel);
     }
 
-    [HttpPost("/local-authority/{id}/")]
+    [HttpPost("/local-authority/{id}/status")]
     [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
     public async Task<IActionResult> LocalAuthorityPost(EditLocalAuthorityViewModel editLocalAuthorityViewModel, string id)
     {
@@ -115,65 +107,23 @@ public class HomeController : Controller
         return RedirectToAction("Index");
     }
 
-    [HttpGet("/user-la/{id}/")]
+    [HttpGet("/local-authority/{id}/users")]
     [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
-    public async Task<IActionResult> UserLaGet(string id)
+    public async Task<IActionResult> UsersGet(string id)
     {
-        var user = await userService.GetUserByIdAsync(int.Parse(id));
-        var localAuthorities = await localAuthorityService.GetAllLocalAuthoritiesAsync();
-        var editUserLasViewModel = new EditUserLasViewModel(user, localAuthorities.ToList());
-        return View("EditUserLas", editUserLasViewModel);
+        var localAuthorityId = int.Parse(id);
+        var users = await userService.GetUsersByLocalAuthorityAsync(localAuthorityId);
+        var localAuthority = await localAuthorityService.GetLocalAuthorityByIdAsync(localAuthorityId);
+        var usersViewModel = new UsersViewModel(users.ToList(), localAuthority);
+        return View("Users", usersViewModel);
     }
 
-    [HttpPost("/user-la/{id}/")]
+    [HttpPost("/local-authority/{id}/users")]
     [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
-    public async Task<IActionResult> UserLaPost(EditUserLasViewModel editUserLasViewModel, string id)
+    public async Task<IActionResult> UsersPost([FromForm] string email, string id)
     {
-        // the checkboxes send an additional dummy value, must filter it out
-        var selectedLocalAuthorityIds =
-            editUserLasViewModel.SelectedLocalAuthorityIds
-                .Where(localAuthorityId => int.TryParse(localAuthorityId, out _))
-                .Select(int.Parse);
-
-        await userService.SetUserLocalAuthoritiesByIdAsync(int.Parse(id), selectedLocalAuthorityIds.ToList());
-        
-        return RedirectToAction("Users");
-    }
-
-    [HttpGet("/adduser")]
-    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
-    public IActionResult AddUserGet()
-    {
-        var addUserViewModel = new AddUserViewModel();
-        
-        return View("AddUser", addUserViewModel);
-    }
-
-    [HttpPost("/adduser")]
-    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
-    public async Task<IActionResult> AddUserPost(AddUserViewModel addUserViewModel)
-    {
-        await userService.AddUserByEmailAsync(addUserViewModel.Email);
-        
-        return RedirectToAction("Users");
-    }
-
-    [HttpGet("/user-disable/{id}/")]
-    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
-    public async Task<IActionResult> UserEnabledGet(string id)
-    {
-        var user = await userService.GetUserByIdAsync(int.Parse(id));
-        var editUserDisabledViewModel = new EditUserEnabledViewModel(user);
-        return View("EditUserEnabled", editUserDisabledViewModel);
-    }
-
-    [HttpPost("/user-disable/{id}/")]
-    [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
-    public async Task<IActionResult> UserEnabledPost([FromForm] bool enabled, [FromForm] UserRole role, string id)
-    {
-        await userService.SetUserEnabledByIdAsync(int.Parse(id), enabled);
-        await userService.SetUserRoleByIdAsync(int.Parse(id), role);
-        
-        return RedirectToAction("Users");
+        var user = await userService.GetOrCreateUserByEmail(email);
+        await userService.AddUserToLocalAuthorityByIdAsync(user.Id, int.Parse(id));
+        return RedirectToAction(nameof(UsersGet), new RouteValueDictionary(new { id }));
     }
 }
