@@ -1,6 +1,6 @@
 ﻿using HerPortal.BusinessLogic.Models.Enums;
 
-namespace HerPortal.Models;
+namespace HerPortal.Models.Components;
 
 public class NavTabsViewModel
 {
