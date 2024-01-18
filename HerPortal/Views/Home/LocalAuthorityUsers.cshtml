@@ -1,4 +1,4 @@
-﻿@model HerPortal.Models.UsersViewModel
+﻿@model HerPortal.Models.LocalAuthorityUsersViewModel
 @using GovUkDesignSystem
 @using GovUkDesignSystem.GovUkDesignSystemComponents
 @using HerPortal.BusinessLogic.Models.Enums
@@ -63,7 +63,7 @@
     ))
 </div>
 
-<form action="@Url.Action(nameof(HomeController.UsersGet), "Home")" method="post" novalidate>
+<form action="@Url.Action(nameof(HomeController.LocalAuthorityUsersGet), "Home")" method="post" novalidate>
     @Html.AntiForgeryToken()
 
     @(await Html.GovUkTextInputFor(

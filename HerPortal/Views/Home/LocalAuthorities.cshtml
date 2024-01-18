@@ -59,8 +59,8 @@
                             new()
                             {
                                 Html = @<div>
-                                    <a href="@Url.Action(nameof(HomeController.LocalAuthorityGet), "Home", new RouteValueDictionary(new { id = la.Id }))">Status</a>
-                                    <a href="@Url.Action(nameof(HomeController.UsersGet), "Home", new RouteValueDictionary(new { id = la.Id }))">Users</a>
+                                    <a href="@Url.Action(nameof(HomeController.LocalAuthorityStatusGet), "Home", new RouteValueDictionary(new { id = la.Id }))">Status</a>
+                                    <a href="@Url.Action(nameof(HomeController.LocalAuthorityUsersGet), "Home", new RouteValueDictionary(new { id = la.Id }))">Users</a>
                                 </div>
                             },
                         }

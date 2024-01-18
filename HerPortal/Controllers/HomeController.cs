@@ -92,30 +92,30 @@ public class HomeController : Controller
 
     [HttpGet("/local-authority/{id}/status")]
     [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
-    public async Task<IActionResult> LocalAuthorityGet(string id)
+    public async Task<IActionResult> LocalAuthorityStatusGet(string id)
     {
         var localAuthority = await localAuthorityService.GetLocalAuthorityByIdAsync(int.Parse(id));
-        var editLocalAuthorityViewModel = new EditLocalAuthorityViewModel(localAuthority);
-        return View("EditLocalAuthority", editLocalAuthorityViewModel);
+        var localAuthorityViewModel = new LocalAuthorityStatusViewModel(localAuthority);
+        return View("LocalAuthorityStatus", localAuthorityViewModel);
     }
 
     [HttpPost("/local-authority/{id}/status")]
     [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
-    public async Task<IActionResult> LocalAuthorityPost(EditLocalAuthorityViewModel editLocalAuthorityViewModel, string id)
+    public async Task<IActionResult> LocalAuthorityStatusPost(LocalAuthorityStatusViewModel localAuthorityStatusViewModel, string id)
     {
-        await localAuthorityService.SetLocalAuthorityStatusById(int.Parse(id), editLocalAuthorityViewModel.Status ?? LocalAuthorityStatus.NotTakingPart);
+        await localAuthorityService.SetLocalAuthorityStatusById(int.Parse(id), localAuthorityStatusViewModel.Status ?? LocalAuthorityStatus.NotTakingPart);
         return RedirectToAction("Index");
     }
 
     [HttpGet("/local-authority/{id}/users")]
     [TypeFilter(typeof(RequiresDesnzStaffFilterAttribute))]
-    public async Task<IActionResult> UsersGet(string id)
+    public async Task<IActionResult> LocalAuthorityUsersGet(string id)
     {
         var localAuthorityId = int.Parse(id);
         var users = await userService.GetUsersByLocalAuthorityAsync(localAuthorityId);
         var localAuthority = await localAuthorityService.GetLocalAuthorityByIdAsync(localAuthorityId);
-        var usersViewModel = new UsersViewModel(users.ToList(), localAuthority);
-        return View("Users", usersViewModel);
+        var localAuthorityUsersViewModel = new LocalAuthorityUsersViewModel(users.ToList(), localAuthority);
+        return View("LocalAuthorityUsers", localAuthorityUsersViewModel);
     }
 
     [HttpPost("/local-authority/{id}/users")]
@@ -124,6 +124,6 @@ public class HomeController : Controller
     {
         var user = await userService.GetOrCreateUserByEmail(email);
         await userService.AddUserToLocalAuthorityByIdAsync(user.Id, int.Parse(id));
-        return RedirectToAction(nameof(UsersGet), new RouteValueDictionary(new { id }));
+        return RedirectToAction(nameof(LocalAuthorityUsersGet), new RouteValueDictionary(new { id }));
     }
 }

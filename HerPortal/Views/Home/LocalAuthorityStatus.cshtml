@@ -1,0 +1,29 @@
+﻿@model HerPortal.Models.LocalAuthorityStatusViewModel
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using HerPortal.Controllers
+@using GovUkDesignSystem
+@using GovUkDesignSystem.GovUkDesignSystemComponents
+@using HerPortal.BusinessLogic.Models.Enums
+@using HerPortal.Models.Components
+@{
+    ViewBag.Title = "Admin - Home Energy Retrofit Portal BETA";   
+}
+
+
+@section BeforeMain {
+    @await Html.PartialAsync("Components/_Tabs", new NavTabsViewModel(NavTabsViewModel.Tab.LocalAuthorities, UserRole.DesnzStaff))
+}
+
+<p>@(Model.Name)</p>
+
+<form action="@Url.Action(nameof(HomeController.LocalAuthorityStatusPost), "Home")" method="post" novalidate>
+    @Html.AntiForgeryToken()
+
+    @(await Html.GovUkRadiosFor(m => m.Status))
+
+    @(await Html.GovUkButton(new ButtonViewModel
+    {
+        Text = "Submit",
+    }))
+</form>
+
