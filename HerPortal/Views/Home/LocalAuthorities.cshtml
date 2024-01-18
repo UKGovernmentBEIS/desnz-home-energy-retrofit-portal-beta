@@ -3,8 +3,7 @@
 @using GovUkDesignSystem.GovUkDesignSystemComponents
 @using HerPortal.BusinessLogic.Models.Enums
 @using HerPortal.Controllers
-@using HerPortal.Models
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using HerPortal.Models.Components
 @using Microsoft.AspNetCore.Routing
 @{
     ViewBag.Title = "Admin - Home Energy Retrofit Portal BETA";   
@@ -17,10 +16,10 @@
 
 <div class="govuk-grid-row">
     <aside class="govuk-grid-column-one-third">
-        @await Html.PartialAsync("Components/_MultiRegionFilter", new MultiRegionFilterViewModel(Model.LocalAuthorities, Model.FilterChar))
+        @await Html.PartialAsync("Components/_MultiRegionFilter", new MultiRegionFilterViewModel(Model.PossibleLocalAuthorities, Model.FilterChar))
     </aside>
     <div class="govuk-grid-column-two-thirds">
-        @await Html.PartialAsync("Components/_AlphabetFilter", new AlphabetFilterViewModel())
+        @await Html.PartialAsync("Components/_AlphabetFilter", new AlphabetFilterViewModel(Model.CharCanFilterPredicate))
         <div class="horizontally-scrollable">
 
             @await Html.GovUkTable(new TableGovUkViewModel

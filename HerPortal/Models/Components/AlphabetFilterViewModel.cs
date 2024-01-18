@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using HerPortal.BusinessLogic.Models.Enums;
 
-namespace HerPortal.Models;
+namespace HerPortal.Models.Components;
 
 public class AlphabetFilterViewModel
 {
@@ -14,13 +14,17 @@ public class AlphabetFilterViewModel
         SupportingDocuments
     }
     
-    public IEnumerable<IEnumerable<char>> AlphabetHalves { get; }
+    public List<List<char>> AlphabetHalves { get; }
 
-    public AlphabetFilterViewModel()
+    public List<Boolean> CharHasLink;
+
+    public AlphabetFilterViewModel(Predicate<char> charCanFilterPredicate)
     {
-        var alphabetFirstHalf = Enumerable.Range(0, 13).Select(i => (char)('A' + i));
-        var alphabetSecondHalf = Enumerable.Range(0, 13).Select(i => (char)('N' + i));
+        var alphabetFirstHalf = Enumerable.Range(0, 13).Select(i => (char)('A' + i)).ToList();
+        var alphabetSecondHalf = Enumerable.Range(0, 13).Select(i => (char)('N' + i)).ToList();
 
-        AlphabetHalves = new[] { alphabetFirstHalf, alphabetSecondHalf };
+        AlphabetHalves = new List<List<char>> { alphabetFirstHalf, alphabetSecondHalf };
+
+        CharHasLink = alphabetFirstHalf.Concat(alphabetSecondHalf).Select(charCanFilterPredicate.Invoke).ToList();
     }
 }

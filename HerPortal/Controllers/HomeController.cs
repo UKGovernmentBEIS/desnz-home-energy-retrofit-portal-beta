@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HerPortal.BusinessLogic.Models.Enums;
@@ -44,20 +43,18 @@ public class HomeController : Controller
         switch (userData.Role)
         {
             case UserRole.DesnzStaff:
-                var localAuthorities = await localAuthorityService.GetAllLocalAuthoritiesAsync();
-
-                var filteredLocalAuthorities = localAuthorities
-                    .Where(localAuthority =>
-                    {
-                        if (filterChar is { } filterCharNotNull)
-                        {
-                            return localAuthority.Name.StartsWith(filterCharNotNull);
-                        }
-                            
-                        return true;
-                    });
+                var localAuthorities = (await localAuthorityService.GetAllLocalAuthoritiesAsync()).ToList();
                 
-                var localAuthoritiesViewModel = new LocalAuthoritiesViewModel(filteredLocalAuthorities.ToList(), filterChar);
+                var firstCharFilteredLocalAuthorities = (filterChar.HasValue
+                    ? localAuthorities.Where(la => la.Name.StartsWith(filterChar.Value))
+                    : localAuthorities).ToList();
+
+                var selectedLocalAuthorities = (custodianCodes.Count > 0
+                    ? firstCharFilteredLocalAuthorities
+                        .Where(localAuthority => custodianCodes.Contains(localAuthority.CustodianCode))
+                    : firstCharFilteredLocalAuthorities).ToList();
+                
+                var localAuthoritiesViewModel = new LocalAuthoritiesViewModel(selectedLocalAuthorities, firstCharFilteredLocalAuthorities, localAuthorities, filterChar);
                 
                 return View("LocalAuthorities", localAuthoritiesViewModel);
             

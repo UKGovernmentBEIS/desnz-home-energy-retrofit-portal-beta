@@ -1,14 +1,25 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@model HerPortal.Models.AlphabetFilterViewModel;
+@model HerPortal.Models.Components.AlphabetFilterViewModel;
 
 <div class="govuk-grid-row" style="margin-bottom: 20px">
+  @{ var i = 0;}
   @foreach (var alphabet in Model.AlphabetHalves)
   {
     <div class="govuk-grid-row">
       <ul class="alphabet">
         @foreach (var c in alphabet)
         {
-          <li><a asp-action="Index" asp-controller="Home" asp-route-FilterChar="@c" class="govuk-body govuk-link--no-visited-state">@c</a></li>
+          <li>
+            @if (Model.CharHasLink[i])
+            {
+              <a asp-action="Index" asp-controller="Home" asp-route-FilterChar="@c" class="govuk-body govuk-link--no-visited-state">@c</a>
+            }
+            else
+            {
+              <p class="govuk-body">@c</p>
+            }
+            @{i++;}
+          </li>
         }
       </ul>
     </div>
