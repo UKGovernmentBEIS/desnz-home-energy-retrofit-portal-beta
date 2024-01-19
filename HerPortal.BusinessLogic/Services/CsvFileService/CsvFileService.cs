@@ -147,6 +147,10 @@ public class CsvFileService : ICsvFileService
                 $"User {userData.Id} is not permitted to access all files");
         }
 
+        // since the two databases are not currently connected, can only pull some debug data
+        // if the databases do get connected, can get this data from a query
+        // if they dont (communicating via api) will need an endpoint for querying this data too
+        // OR this data can be retrieved from parsing the csv files in the bucket too
         var record1 = new ReferralRecord
         {
             ReferralDate = 638407872000000000,
