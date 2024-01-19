@@ -13,5 +13,10 @@
     @await Html.PartialAsync("Components/_Tabs", new NavTabsViewModel(NavTabsViewModel.Tab.ReferralFiles, UserRole.DesnzStaff))
 }
 
-<a asp-controller="CsvFile" asp-action="ExportAllCsvFile" asp-route-dataExportType="Last7Days">@(await Html.GovUkButton(new ButtonViewModel { Text = "Export Last 7 Days" }))</a>
-<a asp-controller="CsvFile" asp-action="ExportAllCsvFile" asp-route-dataExportType="AllTime">@(await Html.GovUkButton(new ButtonViewModel { Text = "Export All" }))</a>
+<h1 class="govuk-heading-m">Download all referrals</h1>
+<p class="govuk-body">Download all referrals in csv format.</p>
+<p><a asp-controller="CsvFile" asp-action="ExportAllCsvFile" asp-route-dataExportType="AllTime">@(await Html.GovUkButton(new ButtonViewModel { Text = "Export All" }))</a></p>
+
+<h1 class="govuk-heading-m">Download referrals from the last week</h1>
+<p class="govuk-body">Download all referrals from the last week in csv format.</p>
+<p><a asp-controller="CsvFile" asp-action="ExportAllCsvFile" asp-route-dataExportType="Last7Days">@(await Html.GovUkButton(new ButtonViewModel { Text = "Export Last 7 Days" }))</a></p>
