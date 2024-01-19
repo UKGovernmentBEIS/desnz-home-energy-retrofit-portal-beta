@@ -31,7 +31,7 @@ public class HomeController : Controller
     }
     
     [HttpGet("/")]
-    public async Task<IActionResult> Index([FromQuery] List<string> custodianCodes, [FromQuery] char? filterChar, int page = 1)
+    public async Task<IActionResult> Index([FromQuery] List<string> custodianCodes, [FromQuery] char? filterChar = null, int page = 1)
     {
         var userEmailAddress = HttpContext.User.GetEmailAddress();
         var userData = await userService.GetUserByEmailAsync(userEmailAddress);
@@ -101,9 +101,12 @@ public class HomeController : Controller
     }
 
     [HttpGet("/supporting-documents")]
-    public IActionResult SupportingDocuments()
+    public async Task<IActionResult> SupportingDocuments()
     {
-        return View("SupportingDocuments");
+        var userEmailAddress = HttpContext.User.GetEmailAddress();
+        var user = await userService.GetUserByEmailAsync(userEmailAddress);
+        
+        return View("SupportingDocuments", new SupportingDocumentsViewModel(user.Role));
     }
 
     [HttpGet("/local-authority/{id}/status")]

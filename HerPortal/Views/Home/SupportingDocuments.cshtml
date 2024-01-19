@@ -1,5 +1,8 @@
 ﻿@using GovUkDesignSystem
 @using GovUkDesignSystem.GovUkDesignSystemComponents
+@using HerPortal.BusinessLogic.Models.Enums
+@using HerPortal.Models.Components
+@model HerPortal.Models.SupportingDocumentsViewModel;
 @{
     ViewBag.Title = "Supporting documents - Home Energy Retrofit Portal BETA";
 }
@@ -8,16 +11,7 @@
 }
 
 @section BeforeMain {
-    <nav class="app-primary-navigation" aria-label="primary">
-        <ul class="app-primary-navigation__list">
-            <li class="app-primary-navigation__item">
-                <a asp-action="Index" class="app-primary-navigation__link">Referral files</a>
-            </li>
-            <li class="app-primary-navigation__item app-primary-navigation__item--current">
-                <a asp-action="SupportingDocuments" class="app-primary-navigation__link" aria-current="page">Supporting documents</a>
-            </li>
-        </ul>
-    </nav>
+    @await Html.PartialAsync("Components/_Tabs", new NavTabsViewModel(NavTabsViewModel.Tab.SupportingDocuments, Model.UserRole))
 }
 
 <h1 class="govuk-heading-l">Supporting documents</h1>

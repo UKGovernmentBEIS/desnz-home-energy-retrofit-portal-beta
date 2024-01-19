@@ -8,17 +8,17 @@
         @if (Model.Role == UserRole.DesnzStaff)
         {
             <li class="@Model.GetClass(TabsViewModel.Tab.LocalAuthorities)">
-                <a asp-action="Index" class="app-primary-navigation__link" aria-current=@Model.GetAriaCurrent(TabsViewModel.Tab.LocalAuthorities) )>Manage Local Authorities</a>
+                <a asp-action="LocalAuthorities" class="app-primary-navigation__link" aria-current=@Model.GetAriaCurrent(TabsViewModel.Tab.LocalAuthorities) )>Manage Local Authorities</a>
             </li>
             <li class="@Model.GetClass(TabsViewModel.Tab.Consortiums)">
                 <a asp-action="Index" class="app-primary-navigation__link" aria-current=@Model.GetAriaCurrent(TabsViewModel.Tab.Consortiums) )>Manage Consortiums</a>
             </li>
         }
         <li class="@Model.GetClass(TabsViewModel.Tab.ReferralFiles)">
-            <a asp-action="Index" class="app-primary-navigation__link" aria-current=@Model.GetAriaCurrent(TabsViewModel.Tab.ReferralFiles) )>Referral Files</a>
+            <a asp-action="ReferralFiles" class="app-primary-navigation__link" aria-current=@Model.GetAriaCurrent(TabsViewModel.Tab.ReferralFiles) )>Referral Files</a>
         </li>
         <li class="@Model.GetClass(TabsViewModel.Tab.SupportingDocuments)">
-            <a asp-action="Index" class="app-primary-navigation__link" aria-current=@Model.GetAriaCurrent(TabsViewModel.Tab.SupportingDocuments) )>Supporting Documents</a>
+            <a asp-action="SupportingDocuments" class="app-primary-navigation__link" aria-current=@Model.GetAriaCurrent(TabsViewModel.Tab.SupportingDocuments) )>Supporting Documents</a>
         </li>
     </ul>
 </nav>
