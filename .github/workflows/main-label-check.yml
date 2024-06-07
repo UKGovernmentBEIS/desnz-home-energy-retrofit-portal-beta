@@ -2,6 +2,8 @@ name: main_label_check
 
 on:
   pull_request:
+    branches:
+      - '**'
     types: [opened, edited, labeled, unlabeled]
 
 jobs:
