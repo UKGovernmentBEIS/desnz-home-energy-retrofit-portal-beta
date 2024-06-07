@@ -4,7 +4,13 @@ on:
   pull_request:
     branches:
       - '**'
-    types: [opened, edited, labeled, unlabeled]
+    types:
+      - opened
+      - reopened
+      - edited
+      - labeled
+      - synchronize
+      - unlabeled
 
 jobs:
   label_check:
@@ -16,4 +22,3 @@ jobs:
         with:
           script: |
             core.setFailed("Label is missing: add a 'production release' label in order to merge to main")
-            
